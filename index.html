@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>التراث Eltourath — كاتالوج المكتب</title>
+<meta name="description" content="التراث Eltourath — مكتب محاسبة تحت إدارة أ.إيمان المغربي. خدمات محاسبة، ضرائب، مراجعة، وتقارير.">
+<style>
+  /* ========== Reset & Base ========== */
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:"Cairo","Tajawal",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+    line-height:1.75;overflow-x:hidden
+  }
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+
+  /* ========== THEME TOKENS ========== */
+  :root{
+    --bg:#f7f9fd;--surface:#ffffff;--text:#0f172a;--muted:#5d6a86;--stroke:#e7ecf3;
+    --brand:#2563eb;--brand2:#22c55e;--accent:#06b6d4;--nav-bg:rgba(255,255,255,.8);
+    --soft-1:#bfdbfe;--soft-2:#a7f3d0;--soft-3:#bae6fd;
+    --shadow:0 10px 24px rgba(31,42,68,.08);--shadow-sm:0 6px 14px rgba(31,42,68,.06);
+    --scrollbar-track:#e9eef7;--scrollbar-thumb:#b7c6e6;--scrollbar-thumb-hover:#9db1df;
+    --radius:22px;
+  }
+  html[data-theme="dark"]{
+    --bg:#0b1020;--surface:#121a31;--text:#e8ecf8;--muted:#aab7df;--stroke:#263154;
+    --brand:#6ea8ff;--brand2:#24e0a9;--accent:#38bdf8;--nav-bg:rgba(11,16,32,.7);
+    --soft-1:#3b82f6;--soft-2:#22d3ee;--soft-3:#a855f7;
+    --shadow:0 10px 24px rgba(0,0,0,.35);--shadow-sm:0 6px 14px rgba(0,0,0,.28);
+    --scrollbar-track:#0f1630;--scrollbar-thumb:#31406a;--scrollbar-thumb-hover:#3d4f85;
+  }
+  .container{width:min(1200px,92%);margin-inline:auto}
+
+  /* Scrollbar */
+  *{scrollbar-width:thin; scrollbar-color:var(--scrollbar-thumb) var(--scrollbar-track)}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:var(--scrollbar-track);border-radius:999px}
+  ::-webkit-scrollbar-thumb{background:var(--scrollbar-thumb);border-radius:999px;border:2px solid transparent;background-clip:padding-box}
+  ::-webkit-scrollbar-thumb:hover{background:var(--scrollbar-thumb-hover)}
+
+  /* Top App Bar */
+  .nav{position:sticky;top:0;z-index:60;background:var(--nav-bg);backdrop-filter:blur(10px);border-bottom:1px solid var(--stroke)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:12px 0;gap:12px}
+  .brand{display:flex;align-items:center;gap:.8rem}
+  .badge{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--brand),#60a5fa);display:grid;place-items:center;box-shadow:var(--shadow-sm);overflow:hidden}
+  .brand-title{margin:0;font-size:18px;font-weight:900}
+  .brand-sub{font-size:12px;color:var(--muted)}
+  .nav-links{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .nav-links button{border:1px solid transparent;background:var(--surface);color:var(--text);font-weight:700;padding:.55rem .9rem;border-radius:12px;cursor:pointer;transition:.2s}
+  .nav-links button:hover{background:color-mix(in oklab, var(--surface), var(--brand) 6%);border-color:var(--stroke)}
+  .nav-links button.active{background:color-mix(in oklab, var(--surface), var(--brand) 12%);border-color:color-mix(in oklab, var(--stroke), var(--brand) 30%)}
+  .lang-toggle,.theme-toggle{border:1px solid color-mix(in oklab, var(--stroke), var(--brand) 35%);background:linear-gradient(180deg, var(--surface), color-mix(in oklab, var(--surface), var(--brand) 10%));color:var(--text);padding:.55rem .9rem;border-radius:14px;font-weight:800;cursor:pointer;box-shadow:var(--shadow-sm)}
+
+  /* Ambient bg */
+  .soft-bg{position:fixed;inset:-20vmax -10vmax auto -10vmax;height:50vmax;z-index:-1;background:
+      radial-gradient(40vmax 40vmax at 80% 10%, var(--soft-1) 10%, transparent 60%),
+      radial-gradient(45vmax 45vmax at 10% 30%, var(--soft-2) 12%, transparent 60%),
+      radial-gradient(35vmax 35vmax at 50% 90%, var(--soft-3) 10%, transparent 60%);filter:blur(40px) saturate(120%);opacity:.5;animation:floatBG 22s ease-in-out infinite alternate}
+  @keyframes floatBG{to{transform:translate3d(2rem,-1rem,0) scale(1.03)}}
+
+  /* Views */
+  main{min-height:70vh}
+  .view{display:none;opacity:0;transform:translateY(12px);transition:.5s cubic-bezier(.2,.65,.2,1)}
+  .view.active{display:block;opacity:1;transform:none}
+  .section{padding:56px 0}
+  .section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+  .title{display:flex;align-items:center;gap:10px}
+  .dot{width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--brand),#a5b4fc)}
+  h2,h3{margin:0}
+  .muted{color:var(--muted)}
+  .divider{height:1px;background:var(--stroke);margin:24px 0}
+
+  /* Grid & Cards */
+  .grid{display:grid;gap:16px;grid-template-columns:repeat(12,1fr)}
+  .col-4{grid-column:span 4}.col-6{grid-column:span 6}.col-12{grid-column:span 12}
+  @media (max-width:1024px){.col-4{grid-column:span 6}.col-6{grid-column:span 12}}
+  @media (max-width:640px){.col-4,.col-6{grid-column:span 12}}
+  .card{background:var(--surface);border:1px solid var(--stroke);border-radius:var(--radius);padding:18px;position:relative;overflow:hidden;transition:.25s;box-shadow:var(--shadow-sm)}
+  .card::after{content:"";position:absolute;inset:auto -20% -40% auto;width:160px;height:160px;background:radial-gradient(closest-side, color-mix(in oklab, var(--brand), #ffffff 70%) ,transparent);transform:rotate(25deg)}
+  .card:hover{transform:translateY(-3px)}
+  .chip{display:inline-flex;gap:6px;align-items:center;padding:6px 10px;border-radius:999px;border:1px solid var(--stroke);background:color-mix(in oklab, var(--surface), var(--brand) 6%);font-size:12px}
+
+  /* Hero */
+  .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center}
+  @media (max-width:980px){.hero{grid-template-columns:1fr}}
+  .hero h1{font-size:clamp(28px,3.6vw,54px);line-height:1.12;font-weight:900;letter-spacing:.2px;margin:0 0 10px;background:linear-gradient(90deg,var(--text), color-mix(in oklab, var(--text), #4b5563 40%) 60%, var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lead{color:var(--muted);font-size:clamp(15px,1.4vw,18px)}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+  .btn{display:inline-flex;align-items:center;gap:.6rem;padding:12px 16px;border-radius:16px;border:1px solid color-mix(in oklab, var(--stroke), var(--brand) 30%);background:linear-gradient(180deg,var(--surface), color-mix(in oklab, var(--surface), var(--brand) 10%));font-weight:800;box-shadow:var(--shadow-sm);transition:.22s;cursor:pointer}
+  .btn:hover{transform:translateY(-2px)}
+  .btn.secondary{background:linear-gradient(180deg,var(--surface), color-mix(in oklab, var(--surface), var(--brand2) 14%));border-color:color-mix(in oklab, var(--stroke), var(--brand2) 40%)}
+  .hero-card{background:var(--surface);border:1px solid var(--stroke);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+  .hero-card .row{display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start;padding:10px 0;border-bottom:1px dashed var(--stroke)}
+  .hero-card .row:last-child{border-bottom:0}
+  .tiny{font-size:12px;color:var(--muted)}
+
+  /* Tabs */
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 8px}
+  .tab{padding:.55rem .9rem;border-radius:12px;border:1px solid var(--stroke);background:var(--surface);cursor:pointer;transition:.15s}
+  .tab.active{border-color:color-mix(in oklab, var(--stroke), var(--brand) 40%);background:color-mix(in oklab, var(--surface), var(--brand) 12%);font-weight:700}
+
+  /* Snap cards */
+  .snap{display:flex;gap:12px;overflow:auto;scroll-snap-type:x mandatory;padding-bottom:8px}
+  .snap>.card{min-width:320px;scroll-snap-align:start}
+
+  /* Contact */
+  .contact-grid{display:grid;gap:12px;grid-template-columns:repeat(3,1fr)}
+  @media (max-width:900px){.contact-grid{grid-template-columns:1fr}}
+  .contact-item{display:flex;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--stroke);border-radius:16px;padding:16px}
+
+  /* Footer */
+  footer{padding:28px 0 44px;border-top:1px solid var(--stroke);color:var(--muted);background:var(--surface)}
+
+  /* Page flare */
+  .page-flare{position:fixed;inset:0;pointer-events:none;opacity:0;transition:opacity .4s ease;background:radial-gradient(60vmax 60vmax at var(--x,50%) var(--y,50%), color-mix(in oklab, var(--brand), #ffffff 55%), transparent 60%)}
+  .page-flare.show{opacity:1}
+  @media (prefers-reduced-motion: reduce){.soft-bg{animation:none}.view{transition:none}.btn:hover{transform:none}.page-flare{display:none}}
+
+  /* ===== MOBILE (<=860px) ===== */
+  @media (max-width:860px){
+    .menu-toggle{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:12px;border:1px solid var(--stroke);background:var(--surface);box-shadow:var(--shadow-sm);cursor:pointer}
+    .menu-toggle svg{width:22px;height:22px}
+
+    .nav-inner{padding:10px 0}
+    .nav-links{
+      position:fixed;top:0;right:0;inset-inline-end:0;
+      height:100vh;height:100dvh;width:min(85vw,340px);
+      padding:16px;background:var(--surface);
+      box-shadow:-20px 0 60px rgba(0,0,0,.15);border-inline-start:1px solid var(--stroke);
+      display:flex;flex-direction:column;align-items:stretch;gap:10px;
+      transform:translateX(110%);transition:transform .28s ease;will-change:transform;overflow:auto;z-index:1000
+    }
+    body.nav-open .nav-links{transform:translateX(0)}
+    .nav-links button,.nav-links .lang-toggle,.nav-links .theme-toggle{width:100%;text-align:start}
+
+    .scrim{
+    position:fixed;
+    top:0; bottom:0; left:0;
+    right:min(85vw, 340px); /* استبعد عرض السايدبار */
+    background:rgba(0,0,0,.25);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .2s linear;
+    z-index:900;
+  }
+  body.nav-open .scrim{opacity:1; pointer-events:auto}
+    .section{padding:28px 0}
+    .hero{grid-template-columns:1fr;gap:16px}
+    .hero-card{padding:14px}
+    .snap>.card{min-width:84vw}
+    .tabs{overflow:auto;scroll-snap-type:x proximity;white-space:nowrap}
+    .tab{scroll-snap-align:start}
+
+    .bottom-cta{position:fixed;inset-inline:0;bottom:0;z-index:950;background:var(--surface);border-top:1px solid var(--stroke);padding:10px env(safe-area-inset-right) calc(10px + env(safe-area-inset-bottom)) env(safe-area-inset-left);display:flex;gap:10px;justify-content:center}
+    .bottom-cta a{flex:1;display:inline-flex;justify-content:center;align-items:center;gap:.5rem}
+    main{padding-bottom:76px}
+    body.nav-open{overflow:hidden;touch-action:none;overscroll-behavior:contain}
+  }
+  @media (min-width:861px){
+    .menu-toggle{display:none}
+    .scrim,.bottom-cta{display:none}
+    .nav-links{position:static;height:auto;width:auto;padding:0;transform:none;box-shadow:none;border:none;flex-direction:row}
+  }
+</style>
+</head>
+<body>
+<div class="soft-bg" aria-hidden="true"></div>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <div class="brand">
+      <div class="badge" aria-hidden="true">
+        <img src="logo.png" alt="Logo" style="width:100%;height:100%;object-fit:contain;">
+      </div>
+      <div>
+        <div class="brand-title" data-i18n="brand">التراث Eltourath</div>
+        <div class="brand-sub" data-i18n="managedBy">تحت إدارة أ.إيمان المغربي</div>
+      </div>
+    </div>
+
+    <!-- Hamburger (mobile) -->
+    <button id="menuBtn" class="menu-toggle" aria-label="فتح القائمة" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M3 6h18M3 12h18M8 18h13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <!-- Nav links (becomes sidebar on mobile) -->
+    <div class="nav-links" role="tablist" aria-label="Navigation">
+      <button class="active" data-route="home" role="tab" aria-selected="true" data-i18n="nav_home">الرئيسية</button>
+      <button data-route="services" role="tab" data-i18n="nav_services">الخدمات</button>
+      <button data-route="industries" role="tab" data-i18n="nav_industries">القطاعات</button>
+      <button data-route="cases" role="tab" data-i18n="nav_cases">دراسات حالة</button>
+      <button data-route="team" role="tab" data-i18n="nav_team">الفريق</button>
+      <button data-route="faq" role="tab" data-i18n="nav_faq">الأسئلة</button>
+      <button data-route="contact" role="tab" data-i18n="nav_contact">تواصل</button>
+      <button id="langBtn" class="lang-toggle" aria-label="Toggle language">AR/EN</button>
+      <button id="themeBtn" class="theme-toggle" aria-label="Toggle theme">🌙/☀️</button>
+    </div>
+  </div>
+</header>
+
+<div id="scrim" class="scrim" hidden></div>
+
+<main>
+  <!-- HOME -->
+  <section class="view active section" data-view="home">
+    <div class="container hero">
+      <div>
+        <h1 data-i18n="hero_title">حلول محاسبية وضريبية واضحة تساعدك تاخد قرار أسرع</h1>
+        <p class="lead" data-i18n="hero_sub">مسك دفاتر، إقرارات، مراجعة داخلية، ولوحات متابعة — بتكامل مع <a href="https://mohasibfriend.com" target="_blank" rel="noopener" style="text-decoration:underline">محاسب فريند</a>.</p>
+        <div class="actions">
+          <a id="whatsBtn" class="btn" href="#" data-i18n="cta_whatsapp">راسلنا على واتساب</a>
+          <a class="btn secondary" href="#" data-route="contact" data-i18n="cta_contact">البيانات والعنوان</a>
+        </div>
+
+        <div class="hero-card" style="margin-top:18px">
+          <div class="row">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="7" r="4" stroke="var(--brand)" stroke-width="1.5"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6" stroke="var(--brand)" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <div><div style="font-weight:800" data-i18n="mgr_title">تحت إدارة: أ.إيمان المغربي</div><div class="tiny" data-i18n="mgr_desc">خبرة محاسبية وضريبية ومتابعة أعمال دقيقة</div></div>
+          </div>
+          <div class="row">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M10 14a5 5 0 007.07 0l2.12-2.12a5 5 0 00-7.07-7.07L10 6" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"/><path d="M14 10a5 5 0 00-7.07 0L4.8 12.12a5 5 0 007.07 7.07L14 18" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <div><div style="font-weight:800">Mohasib Friend</div><div class="tiny"><a href="https://mohasibfriend.com" target="_blank" rel="noopener">mohasibfriend.com</a></div></div>
+          </div>
+          <div class="row">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="var(--brand2)" stroke-width="1.5"/><path d="M3 7l9 6 9-6" stroke="var(--brand2)" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <div><div style="font-weight:800" data-i18n="email_title">البريد</div><div class="tiny"><a id="mailLink" href="mailto:emanelmagraby@eltourath.com">emanelmagraby@eltourath.com</a></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="chip" style="margin-bottom:10px" data-i18n="panel_chip">تقارير فورية</div>
+        <h3 style="margin:6px 0 8px" data-i18n="panel_title">لوحات أداء وإشعارات شهرية</h3>
+        <p class="muted" style="margin:0" data-i18n="panel_desc">KPIs للربحية والتدفقات والمصروفات — مع توصيات تنفيذية.</p>
+        <div class="divider"></div>
+        <div class="grid">
+          <div class="col-6"><div class="chip">Excel</div><div class="muted" data-i18n="panel_f1">نماذج مُخصصة للنشاط</div></div>
+          <div class="col-6"><div class="chip">eInvoice</div><div class="muted" data-i18n="panel_f2">تكامل الفواتير الإلكترونية</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="view section" data-view="services">
+    <div class="container">
+      <div class="section-head">
+        <div class="title"><div class="dot"></div><h2 data-i18n="svc_title">الخدمات</h2></div>
+        <div class="muted" data-i18n="svc_sub">نغطي الدورة المحاسبية كاملة</div>
+      </div>
+      <div class="grid">
+        <article class="card col-4"><div class="chip" data-i18n="svc_1">المحاسبة العامة</div><p class="muted" data-i18n="svc_1d">قيود يومية، تسويات، وإقفال شهري دقيق.</p></article>
+        <article class="card col-4"><div class="chip" data-i18n="svc_2">الضرائب والإقرارات</div><p class="muted" data-i18n="svc_2d">قيمة مضافة، دخل، كسب عمل، وفحص ضريبي.</p></article>
+        <article class="card col-4"><div class="chip" data-i18n="svc_3">تقارير الإدارة</div><p class="muted" data-i18n="svc_3d">لوحات قياس الربحية والتدفقات مع توصيات.</p></article>
+        <article class="card col-4"><div class="chip" data-i18n="svc_4">المراجعة الداخلية</div><p class="muted" data-i18n="svc_4d">ضوابط، خرائط مخاطر، وإجراءات اعتماد.</p></article>
+        <article class="card col-4"><div class="chip" data-i18n="svc_5">التحول الرقمي</div><p class="muted" data-i18n="svc_5d">أتمتة الإكسل وربط الفواتير الإلكترونية.</p></article>
+        <article class="card col-4"><div class="chip" data-i18n="svc_6">استشارات وتأسيس</div><p class="muted" data-i18n="svc_6d">سياسات محاسبية وبنية تقارير مستدامة.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- INDUSTRIES -->
+  <section class="view section" data-view="industries">
+    <div class="container">
+      <div class="section-head">
+        <div class="title"><div class="dot"></div><h2 data-i18n="ind_title">القطاعات التي نخدمها</h2></div>
+        <div class="muted" data-i18n="ind_sub">نُكيّف التقارير حسب طبيعة النشاط</div>
+      </div>
+      <div class="tabs" id="tabs">
+        <button class="tab active" data-pane="retail" data-i18n="ind_tab1">تجارة وتجزئة</button>
+        <button class="tab" data-pane="manufacturing" data-i18n="ind_tab2">تصنيع</button>
+        <button class="tab" data-pane="services" data-i18n="ind_tab3">خدمات/Startups</button>
+        <button class="tab" data-pane="restaurants" data-i18n="ind_tab4">مطاعم</button>
+      </div>
+      <div class="card" id="tab-content" style="min-height:120px">
+        <div data-content="retail"><strong data-i18n="ind_c1h">تجارة وتجزئة:</strong> <span data-i18n="ind_c1">متابعة المخزون، دوران البضاعة، هوامش الربح.</span></div>
+        <div data-content="manufacturing" hidden><strong data-i18n="ind_c2h">تصنيع:</strong> <span data-i18n="ind_c2">مراكز تكلفة، أوامر تشغيل، وتحليل الهدر.</span></div>
+        <div data-content="services" hidden><strong data-i18n="ind_c3h">خدمات:</strong> <span data-i18n="ind_c3">إيراد متكرر، CAC/LTV، وفوترة مرحلية.</span></div>
+        <div data-content="restaurants" hidden><strong data-i18n="ind_c4h">مطاعم:</strong> <span data-i18n="ind_c4">تحكم بالمشتريات، Food Cost، وتحليل مواسم.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASES -->
+  <section class="view section" data-view="cases">
+    <div class="container">
+      <div class="section-head">
+        <div class="title"><div class="dot"></div><h2 data-i18n="cs_title">دراسات حالة</h2></div>
+        <div class="muted" data-i18n="cs_sub">نتائج ملموسة من أرض الواقع</div>
+      </div>
+      <div class="snap">
+        <article class="card"><div class="chip">Retail</div><h3 style="margin:.4rem 0" data-i18n="cs_1h">خفض الهدر 18%</h3><p class="muted" data-i18n="cs_1d">بتطبيق ضوابط شراء وتقارير مخزون أسبوعية.</p></article>
+        <article class="card"><div class="chip">Manufacturing</div><h3 style="margin:.4rem 0" data-i18n="cs_2h">تحسين هامش الربح 6%</h3><p class="muted" data-i18n="cs_2d">خرائط تكلفة ومراقبة أوامر التشغيل.</p></article>
+        <article class="card"><div class="chip">Services</div><h3 style="margin:.4rem 0" data-i18n="cs_3h">تقليل دورة التحصيل 25%</h3><p class="muted" data-i18n="cs_3d">فوترة مرحلية وتنبيهات متابعة.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="view section" data-view="team">
+    <div class="container">
+      <div class="section-head">
+        <div class="title"><div class="dot"></div><h2 data-i18n="team_title">الفريق</h2></div>
+        <div class="muted" data-i18n="team_sub">قيادة خبيرة ومسار تنفيذي واضح</div>
+      </div>
+      <div class="grid">
+        <div class="card col-6"><div class="chip" data-i18n="team_mgr">المدير المسؤول</div><h3 style="margin:.4rem 0" data-i18n="team_mgrn">أ.إيمان المغربي</h3><p class="muted" data-i18n="team_mgrd">إدارة فريق المحاسبة والضرائب وضمان جودة التسليم.</p></div>
+        <div class="card col-6"><div class="chip" data-i18n="team_part">شركاء تقنيون</div><p class="muted" data-i18n="team_partd">تكامل مباشر مع Mohasib Friend لأتمتة التقارير والفواتير.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="view section" data-view="faq">
+    <div class="container">
+      <div class="section-head">
+        <div class="title"><div class="dot"></div><h2 data-i18n="faq_title">الأسئلة الشائعة</h2></div>
+        <div class="muted" data-i18n="faq_sub">معلومات سريعة</div>
+      </div>
+      <div class="grid">
+        <div class="col-6"><div class="card"><div class="chip" data-i18n="q1">تخصيص التقارير؟</div><p class="muted" data-i18n="a1">نعم، نضبط الدليل والتصنيفات ولوحات القياس حسب القطاع.</p></div></div>
+        <div class="col-6"><div class="card"><div class="chip" data-i18n="q2">المتابعة الشهرية؟</div><p class="muted" data-i18n="a2">مواعيد ثابتة، إشعارات، وتسليم حزمة تقارير + توصيات.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="view section" data-view="contact">
+    <div class="container">
+      <div class="section-head">
+        <div class="title"><div class="dot"></div><h2 data-i18n="ct_title">التواصل والعنوان</h2></div>
+        <div class="muted" data-i18n="ct_sub">سعداء بخدمتك</div>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-item">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.92v2a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.09 4.18 2 2 0 014.11 2h2a2 2 0 012 1.72c.12.89.34 1.76.66 2.59a2 2 0 01-.45 2.11L7.1 9.1a16 16 0 006 6l.68-1.19a2 2 0 012.11-.45c.83.32 1.7.54 2.59.66A2 2 0 0122 16.92z" stroke="var(--brand)" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <div><div style="font-weight:800" data-i18n="ct_phone">رقم التليفون</div><div class="muted"><a id="phoneLink" href="#">—</a></div></div>
+        </div>
+        <div class="contact-item">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="var(--brand2)" stroke-width="1.6"/><path d="M3 7l9 6 9-6" stroke="var(--brand2)" stroke-width="1.6"/></svg>
+          <div><div style="font-weight:800" data-i18n="ct_mail">البريد الإلكتروني</div><div class="muted"><a href="mailto:emanelmagraby@eltourath.com" id="mailLink2">emanelmagraby@eltourath.com</a></div></div>
+        </div>
+        <div class="contact-item">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 10c0 6-9 12-9 12S3 16 3 10a9 9 0 1118 0z" stroke="var(--accent)" stroke-width="1.6"/><circle cx="12" cy="10" r="3" stroke="var(--accent)" stroke-width="1.6"/></svg>
+          <div><div style="font-weight:800" data-i18n="ct_address">العنوان</div><div class="muted"><a id="mapLink" target="_blank" rel="noopener" data-i18n="ct_address_val">28 شارع مصر حلوان الزراعي – المعادي – القاهرة – الدور 10 – شقة 105</a></div></div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="muted"><span data-i18n="foot_partner">جزء من منظومة</span> <a href="https://mohasibfriend.com" target="_blank" rel="noopener" style="text-decoration:underline">Mohasib Friend</a></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container" style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between">
+    <div>© <span id="yr"></span> <span data-i18n="brand">التراث Eltourath</span></div>
+    <div class="muted"><span data-i18n="foot_rights">جميع الحقوق محفوظة</span></div>
+  </div>
+</footer>
+
+<div class="bottom-cta" role="toolbar" aria-label="اتصال سريع">
+  <a id="whatsBtnBottom" class="btn" href="#"><span data-i18n="cta_whatsapp_short">واتساب</span></a>
+  <a class="btn secondary" href="#" data-route="contact"><span data-i18n="cta_contact_short">تواصل</span></a>
+</div>
+
+<div class="page-flare" id="flare" aria-hidden="true"></div>
+
+<script>
+  /* ===== Config ===== */
+  const PHONE_NUMBER = "01111166621";
+  const telHref = PHONE_NUMBER ? (PHONE_NUMBER.startsWith('+') ? 'tel:' + PHONE_NUMBER : 'tel:+2' + PHONE_NUMBER.replace(/[^0-9]/g,'')) : '#';
+  const waHref  = PHONE_NUMBER ? ('https://wa.me/' + (PHONE_NUMBER.startsWith('+') ? PHONE_NUMBER.replace(/\+/,'') : '2' + PHONE_NUMBER.replace(/[^0-9]/g,''))) : '#';
+  const mapTextAR = "28 شارع مصر حلوان الزراعي، المعادي، القاهرة، الدور 10، شقة 105";
+  const mapTextEN = "28 Misr Helwan Agricultural Rd, Maadi, Cairo, 10th Floor, Apt 105";
+  const mapBase = "https://www.google.com/maps/search/?api=1&query=";
+
+  /* ===== Sidebar refs early (no TDZ) ===== */
+  let menuBtn = null, scrim = null;
+
+  function setNav(open){
+    document.body.classList.toggle('nav-open', open);
+    menuBtn?.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if(scrim) scrim.hidden = !open;
+  }
+  const openMenu = ()=> setNav(true);
+  const closeMenu = ()=> setNav(false);
+  const toggleMenu = ()=> setNav(!document.body.classList.contains('nav-open'));
+
+  /* ===== Router ===== */
+  const views = Array.from(document.querySelectorAll('.view'));
+  const navButtons = Array.from(document.querySelectorAll('.nav-links [data-route]'));
+  const flare = document.getElementById('flare');
+
+  function showView(name, evt){
+    views.forEach(v => v.classList.toggle('active', v.dataset.view === name));
+    navButtons.forEach(b => b.classList.toggle('active', b.dataset.route === name));
+    if(evt){
+      flare.style.setProperty('--x', (evt.clientX/window.innerWidth)*100 + '%');
+      flare.style.setProperty('--y', (evt.clientY/window.innerHeight)*100 + '%');
+      flare.classList.add('show'); setTimeout(()=>flare.classList.remove('show'), 350);
+    }
+    history.replaceState(null, '', '#'+name);
+    closeMenu();
+  }
+  navButtons.forEach(btn=> btn.addEventListener('click', (e)=> showView(btn.dataset.route, e)));
+  const initial = (location.hash || '#home').replace('#',''); showView(initial);
+
+  /* ===== Contact links ===== */
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const phoneLink = document.getElementById('phoneLink');
+  const whatsBtn  = document.getElementById('whatsBtn');
+  const whatsBtnBottom = document.getElementById('whatsBtnBottom');
+  const mapLink   = document.getElementById('mapLink');
+  if (phoneLink){ phoneLink.textContent = PHONE_NUMBER || "—"; phoneLink.href = telHref; }
+  if (whatsBtn){ whatsBtn.href = waHref; }
+  if (whatsBtnBottom){ whatsBtnBottom.href = waHref; }
+  function updateMapLink(){
+    const isAR = document.documentElement.lang === 'ar';
+    const q = encodeURIComponent(isAR ? mapTextAR : mapTextEN);
+    if(mapLink) mapLink.href = mapBase + q;
+  }
+
+  /* ===== Tabs ===== */
+  const tabs = document.querySelectorAll('.tab');
+  const panes = document.querySelectorAll('[data-content]');
+  tabs.forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      tabs.forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+      const id = tab.getAttribute('data-pane');
+      panes.forEach(p => p.hidden = p.getAttribute('data-content') !== id);
+    });
+  });
+
+  /* ===== Buttons micro motion ===== */
+  document.querySelectorAll('.btn').forEach(btn=>{
+    btn.addEventListener('mousemove', ()=>{ btn.style.transform='translateY(-2px)'; });
+    btn.addEventListener('mouseleave', ()=>{ btn.style.transform=''; });
+    if(btn.dataset.route){ btn.addEventListener('click', (e)=> showView(btn.dataset.route, e)); }
+  });
+
+  /* ===== i18n ===== */
+  const copy = {
+    ar:{brand:"التراث",managedBy:"تحت إدارة أ.إيمان المغربي",
+      nav_home:"الرئيسية",nav_services:"الخدمات",nav_industries:"القطاعات",nav_cases:"دراسات حالة",nav_team:"الفريق",nav_faq:"الأسئلة",nav_contact:"تواصل",
+      hero_title:"حلول محاسبية وضريبية واضحة تساعدك تاخد قرار أسرع",
+      hero_sub:'مسك دفاتر، إقرارات، مراجعة داخلية، ولوحات متابعة — بتكامل مع <u>محاسب فريند</u>.',
+      cta_whatsapp:"راسلنا على واتساب",cta_contact:"البيانات والعنوان",
+      cta_whatsapp_short:"واتساب",cta_contact_short:"تواصل",
+      mgr_title:"تحت إدارة: أ.إيمان المغربي",mgr_desc:"خبرة محاسبية وضريبية ومتابعة أعمال دقيقة",
+      email_title:"البريد",
+      panel_chip:"تقارير فورية",panel_title:"لوحات أداء وإشعارات شهرية",panel_desc:"KPIs للربحية والتدفقات والمصروفات — مع توصيات تنفيذية.",
+      panel_f1:"نماذج مُخصصة للنشاط",panel_f2:"تكامل الفواتير الإلكترونية",
+      svc_title:"الخدمات",svc_sub:"نغطي الدورة المحاسبية كاملة",
+      svc_1:"المحاسبة العامة",svc_1d:"قيود يومية، تسويات، وإقفال شهري دقيق.",
+      svc_2:"الضرائب والإقرارات",svc_2d:"قيمة مضافة، دخل، كسب عمل، وفحص ضريبي.",
+      svc_3:"تقارير الإدارة",svc_3d:"لوحات قياس الربحية والتدفقات مع توصيات.",
+      svc_4:"المراجعة الداخلية",svc_4d:"ضوابط، خرائط مخاطر، وإجراءات اعتماد.",
+      svc_5:"التحول الرقمي",svc_5d:"أتمتة الإكسل وربط الفواتير الإلكترونية.",
+      svc_6:"استشارات وتأسيس",svc_6d:"سياسات محاسبية وبنية تقارير مستدامة.",
+      ind_title:"القطاعات التي نخدمها",ind_sub:"نُكيّف التقارير حسب طبيعة النشاط",
+      ind_tab1:"تجارة وتجزئة",ind_tab2:"تصنيع",ind_tab3:"خدمات/Startups",ind_tab4:"مطاعم",
+      ind_c1h:"تجارة وتجزئة:",ind_c1:"متابعة المخزون، دوران البضاعة، هوامش الربح.",
+      ind_c2h:"تصنيع:",ind_c2:"مراكز تكلفة، أوامر تشغيل، وتحليل الهدر.",
+      ind_c3h:"خدمات:",ind_c3:"إيراد متكرر، CAC/LTV، وفوترة مرحلية.",
+      ind_c4h:"مطاعم:",ind_c4:"تحكم بالمشتريات، Food Cost، وتحليل مواسم.",
+      cs_title:"دراسات حالة",cs_sub:"نتائج ملموسة من أرض الواقع",
+      cs_1h:"خفض الهدر 18%",cs_1d:"بتطبيق ضوابط شراء وتقارير مخزون أسبوعية.",
+      cs_2h:"تحسين هامش الربح 6%",cs_2d:"خرائط تكلفة ومراقبة أوامر التشغيل.",
+      cs_3h:"تقليل دورة التحصيل 25%",cs_3d:"فوترة مرحلية وتنبيهات متابعة.",
+      team_title:"الفريق",team_sub:"قيادة خبيرة ومسار تنفيذي واضح",
+      team_mgr:"المدير المسؤول",team_mgrn:"أ.إيمان المغربي",team_mgrd:"إدارة فريق المحاسبة والضرائب وضمان جودة التسليم.",
+      team_part:"شركاء تقنيون",team_partd:"تكامل مع Mohasib Friend لأتمتة التقارير والفواتير.",
+      faq_title:"الأسئلة الشائعة",faq_sub:"معلومات سريعة",
+      q1:"تخصيص التقارير؟",a1:"نعم، نضبط الدليل والتصنيفات ولوحات القياس حسب القطاع.",
+      q2:"المتابعة الشهرية؟",a2:"مواعيد ثابتة، إشعارات، وتسليم حزمة تقارير + توصيات.",
+      ct_title:"التواصل والعنوان",ct_sub:"سعداء بخدمتك",
+      ct_phone:"رقم التليفون",ct_mail:"البريد الإلكتروني",ct_address:"العنوان",
+      ct_address_val:"28 شارع مصر حلوان الزراعي – المعادي – القاهرة – الدور 10 – شقة 105",
+      foot_partner:"جزء من منظومة",foot_rights:"جميع الحقوق محفوظة"
+    },
+    en:{brand:"Eltourath",managedBy:"Managed by: Eman El-Maghraby",
+      nav_home:"Home",nav_services:"Services",nav_industries:"Industries",nav_cases:"Case Studies",nav_team:"Team",nav_faq:"FAQ",nav_contact:"Contact",
+      hero_title:"Clear Accounting & Tax Solutions for Faster Decisions",
+      hero_sub:'Bookkeeping, filings, internal review, and dashboards — integrated with <u>Mohasib Friend</u>.',
+      cta_whatsapp:"Chat on WhatsApp",cta_contact:"Contact & Address",
+      cta_whatsapp_short:"WhatsApp",cta_contact_short:"Contact",
+      mgr_title:"Managed by: Eman El-Maghraby",mgr_desc:"Accounting & tax expertise with precise follow-up",
+      email_title:"Email",
+      panel_chip:"Instant Reports",panel_title:"Performance Dashboards & Monthly Alerts",panel_desc:"Profitability, cash-flow and expenses KPIs with actionable insights.",
+      panel_f1:"Business-tailored Excel",panel_f2:"eInvoice integration",
+      svc_title:"Services",svc_sub:"We cover the full accounting cycle",
+      svc_1:"General Accounting",svc_1d:"Journals, reconciliations, and accurate month-end close.",
+      svc_2:"Taxes & Filings",svc_2d:"VAT, Income, Payroll, and audit support.",
+      svc_3:"Management Reports",svc_3d:"Profitability & cash-flow dashboards with insights.",
+      svc_4:"Internal Audit",svc_4d:"Controls, risk maps, and approval workflows.",
+      svc_5:"Digital Transformation",svc_5d:"Excel automation and eInvoice integration.",
+      svc_6:"Advisory & Setup",svc_6d:"Policies and sustainable reporting structures.",
+      ind_title:"Industries We Serve",ind_sub:"Reports tailored to your activity",
+      ind_tab1:"Retail",ind_tab2:"Manufacturing",ind_tab3:"Services/Startups",ind_tab4:"F&B",
+      ind_c1h:"Retail:",ind_c1:"Inventory turns, margins, and supply chain health.",
+      ind_c2h:"Manufacturing:",ind_c2:"Cost centers, job orders, and waste analysis.",
+      ind_c3h:"Services:",ind_c3:"MRR, CAC/LTV, and milestone billing.",
+      ind_c4h:"F&B:",ind_c4:"Purchasing control, food cost, and seasonality.",
+      cs_title:"Case Studies",cs_sub:"Real results",
+      cs_1h:"18% waste reduction",cs_1d:"Tighter purchasing controls and weekly stock reports.",
+      cs_2h:"+6% margin uplift",cs_2d:"Cost maps and job order oversight.",
+      cs_3h:"25% DSO improvement",cs_3d:"Milestone billing and follow-up alerts.",
+      team_title:"Team",team_sub:"Experienced leadership & clear execution",
+      team_mgr:"Managing Director",team_mgrn:"Eman El-Maghraby",team_mgrd:"Leads accounting & tax delivery quality.",
+      team_part:"Tech Partners",team_partd:"Direct integration with Mohasib Friend.",
+      faq_title:"FAQ",faq_sub:"Quick info",
+      q1:"Custom reports?",a1:"Yes — we adapt the chart, taxonomy and KPIs per industry.",
+      q2:"Monthly follow-up?",a2:"Fixed cadence, alerts, and a deliverable reports pack.",
+      ct_title:"Contact & Address",ct_sub:"Happy to support",
+      ct_phone:"Phone",ct_mail:"Email",ct_address:"Address",
+      ct_address_val:"28 Misr Helwan Agricultural Rd, Maadi, Cairo, 10th Floor, Apt 105",
+      foot_partner:"Part of",foot_rights:"All rights reserved"
+    }
+  };
+
+  const langBtn = document.getElementById('langBtn');
+  function setLang(lang){
+    const root = document.documentElement;
+    root.lang = lang; root.dir = (lang==='ar' ? 'rtl' : 'ltr');
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const key = el.dataset.i18n; const val = copy[lang]?.[key] || '';
+      if(/^(A|BUTTON|DIV|SPAN|H1|H2|H3)$/.test(el.tagName)) el.innerHTML = val;
+    });
+    updateMapLink();
+  }
+  setLang('ar');
+  langBtn.addEventListener('click', ()=> setLang(document.documentElement.lang==='ar' ? 'en' : 'ar'));
+
+  /* ===== Theme ===== */
+  const themeBtn = document.getElementById('themeBtn');
+  function applyTheme(theme){ document.documentElement.setAttribute('data-theme', theme); localStorage.setItem('elt_theme', theme); }
+  (function initTheme(){
+    const saved = localStorage.getItem('elt_theme');
+    if(saved){ applyTheme(saved); }
+    else{
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      applyTheme(prefersDark ? 'dark' : 'light');
+    }
+  })();
+  themeBtn.addEventListener('click', ()=>{
+    const cur = document.documentElement.getAttribute('data-theme') || 'light';
+    applyTheme(cur === 'light' ? 'dark' : 'light');
+  });
+
+  // initial map
+  updateMapLink();
+
+  /* ===== Sidebar wiring ===== */
+  menuBtn = document.getElementById('menuBtn');
+  scrim   = document.getElementById('scrim');
+
+  menuBtn?.addEventListener('click', toggleMenu);
+  scrim?.addEventListener('click', closeMenu);
+  window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); });
+  window.addEventListener('resize', ()=>{ if(window.innerWidth>860) closeMenu(); });
+</script>
+</body>
+</html>
