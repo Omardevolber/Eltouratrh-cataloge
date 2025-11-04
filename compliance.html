@@ -1,0 +1,942 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <link rel="icon" type="image/png" href="images/logo.png" />
+  <script>
+    (function () {
+      // لو أنت حالياً على /home.html، اظهرها /home من غير إعادة تحميل
+      if (/\.html$/.test(location.pathname)) {
+        history.replaceState(null, '', location.pathname.replace(/\.html$/, '') + location.search + location.hash);
+      }
+    })();
+  </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>مكتب إيمان المغربي | الامتثال والمعايير</title>
+  <meta name="description"
+    content="سياسات ومعايير المراجعة المصرية والدولية، مسؤوليات الإدارة، خطابات الإدارة، أوراق العمل، السرية، الإطار القانوني، والالتزامات التشغيلية: إقرارات القيمة المضافة، تسويات كسب العمل والخصم والإضافة، والفاتورة الإلكترونية." />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --muted: #f6f7fb;
+      --text: #0f172a;
+      --sub: #475569;
+      --brand: #5b7cfa;
+      --brand2: #7c3aed;
+      --accent: #fbbf24;
+      --card: #ffffff;
+      --border: #e5e7eb;
+      --shadow: 0 10px 25px rgba(2, 6, 23, .08);
+      --ok: #16a34a;
+      --warn: #f59e0b;
+      --bad: #ef4444;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0b1020;
+      --muted: #0f1426;
+      --text: #e5e7eb;
+      --sub: #9aa7bd;
+      --brand: #8aa2ff;
+      --brand2: #a78bfa;
+      --accent: #fcd34d;
+      --card: #121a33;
+      --border: #1f2a44;
+      --shadow: 0 10px 25px rgba(0, 0, 0, .45);
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Arial
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    .container {
+      width: min(1200px, 92%);
+      margin: auto
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      backdrop-filter: saturate(180%) blur(10px);
+      background: color-mix(in oklab, var(--bg) 86%, transparent);
+      border-bottom: 1px solid var(--border)
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 0
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px color-mix(in oklab, var(--brand) 35%, transparent);
+      background: conic-gradient(from 210deg, var(--brand), var(--brand2), var(--accent), var(--brand))
+    }
+
+    .navlinks {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap
+    }
+
+    .navlinks a {
+      padding: 8px 10px;
+      border-radius: 10px
+    }
+
+    .navlinks a:hover {
+      background: var(--muted)
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      align-items: center
+    }
+
+    .toggle {
+      display: inline-flex;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      overflow: hidden
+    }
+
+    .toggle button {
+      padding: 8px 12px;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      color: var(--text)
+    }
+
+    .toggle button.active {
+      background: var(--muted);
+      font-weight: 700
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform .2s, box-shadow .2s
+    }
+
+    .btn:hover {
+      transform: translateY(-2px)
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      color: #fff;
+      border: 0;
+      box-shadow: 0 10px 28px color-mix(in oklab, var(--brand) 35%, transparent)
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 68px 0 28px;
+      background:
+        radial-gradient(650px 300px at 80% -20%, color-mix(in oklab, var(--brand2) 18%, transparent), transparent 60%),
+        radial-gradient(520px 240px at -10% 10%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 60%)
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 30px;
+      align-items: center
+    }
+
+    h1 {
+      font-size: clamp(28px, 3.2vw, 42px);
+      line-height: 1.2;
+      margin: 8px 0 12px
+    }
+
+    .kicker {
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--brand2)
+    }
+
+    .lead {
+      color: var(--sub)
+    }
+
+    .hero-card {
+      border: 1px solid var(--border);
+      background: var(--card);
+      padding: 18px;
+      border-radius: 16px;
+      box-shadow: var(--shadow)
+    }
+
+    .tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap
+    }
+
+    .tag {
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--card)
+    }
+
+    .glow {
+      position: absolute;
+      inset: auto -20% -20% -20%;
+      height: 200px;
+      filter: blur(40px);
+      background: linear-gradient(90deg, color-mix(in oklab, var(--brand) 25%, transparent), color-mix(in oklab, var(--accent) 20%, transparent));
+      opacity: .35;
+      pointer-events: none
+    }
+
+    /* Sections */
+    section {
+      padding: 54px 0;
+      border-top: 1px solid var(--border)
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px
+    }
+
+    .section-head h2 {
+      font-size: clamp(22px, 2.6vw, 30px);
+      margin: 0
+    }
+
+    .sub {
+      color: var(--sub)
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px
+    }
+
+    .cols-2 {
+      grid-template-columns: repeat(2, 1fr)
+    }
+
+    .cols-3 {
+      grid-template-columns: repeat(3, 1fr)
+    }
+
+    .cols-4 {
+      grid-template-columns: repeat(4, 1fr)
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      transition: transform .2s, box-shadow .2s, border-color .2s
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, .12);
+      border-color: color-mix(in oklab, var(--brand) 35%, var(--border))
+    }
+
+    .small {
+      font-size: 14px;
+      color: var(--sub)
+    }
+
+    .chip {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 12px;
+      padding: 6px 8px;
+      border-radius: 999px;
+      background: var(--muted)
+    }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .6s, transform .6s
+    }
+
+    .reveal.in-view {
+      opacity: 1;
+      transform: none
+    }
+
+    /* Subnav */
+    .subnav {
+      position: sticky;
+      top: 60px;
+      z-index: 95;
+      background: var(--muted);
+      border-bottom: 1px solid var(--border)
+    }
+
+    .subnav .wrap {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 8px 0
+    }
+
+    .pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      cursor: pointer
+    }
+
+    .pill:hover {
+      transform: translateY(-1px)
+    }
+
+    .pill.active {
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      color: #fff;
+      border: 0
+    }
+
+    /* Footer */
+    footer {
+      padding: 28px 0 40px;
+      border-top: 1px solid var(--border);
+      background: var(--muted)
+    }
+
+    .foot-cols {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: 1.2fr 1fr 1fr
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: conic-gradient(from 210deg, var(--brand), var(--brand2), var(--accent), var(--brand));
+      box-shadow: 0 6px 18px color-mix(in oklab, var(--brand) 35%, transparent);
+      padding: 2px;
+      /* حافة رفيعة حول الصورة */
+      display: inline-grid;
+      place-items: center;
+    }
+
+    .logo-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      object-fit: contain;
+      /* يراعي نسبة الصورة */
+      background: #fff;
+      /* خلفية بيضا لو الشعار شفاف */
+    }
+
+    /* تصغير على الموبايل زي قبل */
+    @media (max-width:640px) {
+      .brand .logo {
+        width: 34px;
+        height: 34px
+      }
+
+      .brand .logo .logo-img {
+        border-radius: 7px
+      }
+    }
+
+    @media (max-width: 960px) {
+
+      .hero-grid,
+      .cols-2,
+      .cols-3,
+      .cols-4,
+      .foot-cols {
+        grid-template-columns: 1fr
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-label="Logo">
+          <img src="images/logo.png" alt="Eman El-Maghraby Office" class="logo-img" />
+        </div>
+        <div>
+          <div class="kicker" data-i18n="brand.tag">مكتب محاسبة ومراجعة</div>
+          <strong data-i18n="brand.name">مكتب إيمان المغربي</strong>
+        </div>
+      </div>
+      <nav class="navlinks">
+        <a href="index.html" data-i18n="nav.home">الرئيسية</a>
+        <a href="audit.html" data-i18n="nav.audit">التدقيق</a>
+        <a href="tax.html" data-i18n="nav.tax">الضرائب</a>
+        <a href="advisory.html" data-i18n="nav.consult">الاستشارات</a>
+        <a href="formation.html" data-i18n="nav.company">تأسيس الشركات</a>
+        <a class="btn" style="padding:6px 10px" href="compliance.html" data-i18n="nav.assurance">المعايير</a>
+        <a href="pricing.html" data-i18n="nav.pricing">الأتعاب</a>
+        <a href="contact.html" data-i18n="nav.contact">التواصل</a>
+      </nav>
+      <div class="actions">
+        <div class="toggle" id="langToggle" role="group" aria-label="Language">
+          <button data-lang="ar" class="active">ع</button><button data-lang="en">En</button>
+        </div>
+        <div class="toggle" id="themeToggle" role="group" aria-label="Theme">
+          <button data-theme="light" class="active" title="Light">☀️</button><button data-theme="dark"
+            title="Dark">🌙</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="reveal">
+        <div class="kicker" data-i18n="hero.kicker">امتثال ومعايير | سياسات وواجبات</div>
+        <h1 data-i18n="hero.title">منهجية امتثال محكومة بالمعايير المصرية والدولية</h1>
+        <p class="lead" data-i18n="hero.lead">
+          نطبّق معايير المراجعة المصرية (وبما يتسق مع الدولية) مع تحديد واضح لمسؤوليات الإدارة وخطابات التأكيد،
+          وسرية أوراق العمل، والإطار القانوني المصري، مع خطة التزامات تشغيلية مستمرة (VAT، كسب العمل/الخصم والإضافة،
+          الفاتورة الإلكترونية).
+        </p>
+        <div class="tags">
+          <span class="tag">EAS/ISA</span><span class="tag">Reasonable Assurance</span><span
+            class="tag">Confidentiality</span><span class="tag">Egyptian Law</span>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="hero-card small">
+          <div><strong data-i18n="hero.snap">أُطر رقابية واضحة</strong></div>
+          <ul style="margin:8px 0 0 18px">
+            <li data-i18n="hero.li1">مسؤولية الإدارة عن إعداد القوائم والسياسات.</li>
+            <li data-i18n="hero.li2">تأكيدات مكتوبة + خطابات إدارة.</li>
+            <li data-i18n="hero.li3">أوراق عمل ملك للمكتب وسرية.</li>
+            <li data-i18n="hero.li4">اختصاص قضائي مصري صارم.</li>
+          </ul>
+          <div class="chip" data-i18n="hero.note">ضمان معقول لا مطلق.</div>
+        </div>
+      </div>
+    </div>
+    <div class="glow" aria-hidden="true"></div>
+  </section>
+
+  <!-- In-page subnav -->
+  <div class="subnav">
+    <div class="container wrap">
+      <a class="pill active" href="#framework" data-i18n="sub.framework">إطار المعايير</a>
+      <a class="pill" href="#responsibilities" data-i18n="sub.resp">مسؤوليات الإدارة</a>
+      <a class="pill" href="#procedures" data-i18n="sub.proc">إجراءات المراجعة</a>
+      <a class="pill" href="#mgmtletters" data-i18n="sub.letters">خطابات الإدارة</a>
+      <a class="pill" href="#workpapers" data-i18n="sub.wp">أوراق العمل والسرية</a>
+      <a class="pill" href="#legal" data-i18n="sub.legal">الإطار القانوني</a>
+      <a class="pill" href="#ops" data-i18n="sub.ops">التزامات تشغيلية</a>
+      <a class="pill" href="#calendar" data-i18n="sub.calendar">تقويم الامتثال</a>
+      <a class="pill" href="#deliverables" data-i18n="sub.deliverables">المخرجات</a>
+      <a class="pill" href="#fees" data-i18n="sub.fees">الأتعاب والشروط</a>
+      <a class="pill" href="#payment" data-i18n="sub.payment">الدفع</a>
+      <a class="pill" href="#contact" data-i18n="sub.contact">التواصل</a>
+    </div>
+  </div>
+
+  <!-- FRAMEWORK -->
+  <section id="framework">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="fw.title">إطار المعايير والامتثال</h2>
+        <p class="sub" data-i18n="fw.sub">تطبيق المعايير المصرية للمراجعة وبما يتسق مع الدولية، مع ضمان معقول.</p>
+      </div>
+      <div class="grid cols-3">
+        <div class="card reveal">
+          <h3 data-i18n="fw.h1">ضمان معقول</h3>
+          <p class="small" data-i18n="fw.p1">
+            التخطيط والتنفيذ للحصول على ضمان <strong>معقول</strong> وليس مطلقًا بخصوص خلو القوائم من أخطاء جوهرية أو غش،
+            مع تقرير أي مؤشرات مهمة إلى الإدارة.
+          </p>
+          <span class="chip" data-i18n="fw.cite1">مرجعية: معايير المراجعة المصرية.</span>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="fw.h2">مسؤولية إعداد القوائم</h3>
+          <p class="small" data-i18n="fw.p2">
+            إعداد القوائم والسياسات والتقديرات مسؤولية الإدارة، ودورنا رأي مهني فني وفق المعايير المصرية للمراجعة وإعداد
+            القوائم.
+          </p>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="fw.h3">خطابات التمثيل</h3>
+          <p class="small" data-i18n="fw.p3">
+            الحصول على خطابات تأكيد مكتوبة من الإدارة يمثل جزءًا من دليل المراجعة الذي نبني عليه رأينا.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESPONSIBILITIES -->
+  <section id="responsibilities">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="resp.title">مسؤوليات الإدارة</h2>
+        <p class="sub" data-i18n="resp.sub">سجلات كافية، رقابة داخلية، سياسات محاسبية، وإفصاحات لازمة.</p>
+      </div>
+      <div class="grid cols-2">
+        <div class="card reveal">
+          <ul class="small" style="margin:8px 0 0 18px">
+            <li data-i18n="resp.li1">إعداد القوائم وفق المعايير المصرية وإتاحة البيانات كاملة.</li>
+            <li data-i18n="resp.li2">اختيار وتطبيق السياسات المحاسبية والاحتفاظ بسجلات كافية.</li>
+            <li data-i18n="resp.li3">التعاون في توقيتات إصدار تقرير المراجعة وتقديم التأكيدات المكتوبة.</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <div class="small" data-i18n="resp.note">
+            أي إخفاء/عدم دقة بالبيانات يقيّد مسؤوليتنا ويُبطل أي التزامات غير منصوص عليها صراحة.
+          </div>
+          <span class="chip" data-i18n="resp.badge">تعاون الإدارة يؤثر على توقيت التقرير</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCEDURES -->
+  <section id="procedures">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="proc.title">ملامح إجراءات المراجعة</h2>
+        <p class="sub" data-i18n="proc.sub">تخطيط قائم على فهم النشاط والهيكل والرقابة الداخلية.</p>
+      </div>
+      <div class="grid cols-3">
+        <div class="card reveal">
+          <h3 data-i18n="proc.h1">فهم النشاط</h3>
+          <p class="small" data-i18n="proc.p1">طبيعة المعاملات + الهيكل التنظيمي + نقاط التركيز.</p>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="proc.h2">اختبارات وأدلة</h3>
+          <p class="small" data-i18n="proc.p2">فحص مستندات وأدلة، تقديرات مهمة، وعرض الإفصاحات.</p>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="proc.h3">اعتماد على الرقابة</h3>
+          <p class="small" data-i18n="proc.p3">نطاق وتوقيت الاختبارات يتغيران وفق فعالية الرقابة الداخلية.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MGMT LETTERS -->
+  <section id="mgmtletters">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="ml.title">خطابات الإدارة وتقارير التحسين</h2>
+        <p class="sub" data-i18n="ml.sub">تنبيه بنواحي القصور أو فرص رفع الكفاءة مع توصيات عملية.</p>
+      </div>
+      <div class="card reveal">
+        <p class="small" data-i18n="ml.p">
+          عند رصد قصور أو فرص تحسين بالرقابة الداخلية أو التشغيل نرفقها بخطاب إدارة وتوصيات. ملاحظة: فحص الرقابة خارج
+          النطاق
+          الضروري لا تفرضه المعايير إلا بقدر ما يخدم تحديد طبيعة وإطار وتوقيت إجراءات المراجعة.
+        </p>
+        <span class="chip" data-i18n="ml.badge">تقرير إدارة عند وجود مسائل مهمة</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKING PAPERS + CONFIDENTIALITY -->
+  <section id="workpapers">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="wp.title">أوراق العمل والسرية</h2>
+        <p class="sub" data-i18n="wp.sub">ملكية المكتب وسرية طبقًا لسياساتنا وإجراءاتنا.</p>
+      </div>
+      <div class="grid cols-2">
+        <div class="card reveal">
+          <h3 data-i18n="wp.h1">ملكية أوراق العمل</h3>
+          <p class="small" data-i18n="wp.p1">أوراق العمل ملك للمكتب وتضم معلومات سرية.</p>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="wp.h2">سرية المعلومات</h3>
+          <p class="small" data-i18n="wp.p2">قصر الاستخدام على المجالات ذات الصلة وإمكان الإفصاح لفريق العمل بنفس
+            الشروط.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEGAL -->
+  <section id="legal">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="lg.title">الإطار القانوني والاختصاص</h2>
+        <p class="sub" data-i18n="lg.sub">تطبيق كامل للقانون المصري واختصاص المحاكم المصرية.</p>
+      </div>
+      <div class="card reveal">
+        <p class="small" data-i18n="lg.p">
+          يخضع تعاملنا بأكمله للقوانين المصرية. أي بطلان جزئي لأي بند لا يؤثر على باقي البنود. أي نزاع ينعقد اختصاصه
+          للمحاكم المصرية المختصة.
+        </p>
+        <span class="chip" data-i18n="lg.badge">قابلية فصل البنود + اختصاص مصري</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPERATIONS COMPLIANCE -->
+  <section id="ops">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="ops.title">التزامات تشغيلية مستمرة</h2>
+        <p class="sub" data-i18n="ops.sub">نُدير معكم الامتثال الدوري لما بعد المراجعة/التأسيس.</p>
+      </div>
+      <div class="grid cols-3">
+        <div class="card reveal">
+          <h3 data-i18n="ops.h1">القيمة المضافة (VAT)</h3>
+          <p class="small" data-i18n="ops.p1">رفع الإقرار الشهري ومتابعة التسجيل عند الانطباق.</p>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="ops.h2">كسب العمل والخصم والإضافة</h3>
+          <p class="small" data-i18n="ops.p2">تسويات الرواتب والخصومات الشهرية الدورية.</p>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="ops.h3">الفاتورة الإلكترونية</h3>
+          <p class="small" data-i18n="ops.p3">تشغيل وربط منظومة الفاتورة الإلكترونية ومتابعتها.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALENDAR -->
+  <section id="calendar">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="cal.title">تقويم امتثال نموذجي</h2>
+        <p class="sub" data-i18n="cal.sub">تتغير التفاصيل حسب طبيعة النشاط وحجم العمليات.</p>
+      </div>
+      <div class="grid cols-3">
+        <div class="card reveal">
+          <h3 data-i18n="cal.m">شهريًا</h3>
+          <ul class="small" style="margin:8px 0 0 18px">
+            <li data-i18n="cal.m1">إقرار VAT (عند التسجيل).</li>
+            <li data-i18n="cal.m2">تسويات كسب العمل والخصم والإضافة.</li>
+            <li data-i18n="cal.m3">مراجعة بيانات الفاتورة الإلكترونية.</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="cal.q">ربع سنوي</h3>
+          <ul class="small" style="margin:8px 0 0 18px">
+            <li data-i18n="cal.q1">مراجعة دورية للأرصدة والسياسات.</li>
+            <li data-i18n="cal.q2">تسويات بنكية وتحسين ضوابط.</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="cal.y">سنويًا</h3>
+          <ul class="small" style="margin:8px 0 0 18px">
+            <li data-i18n="cal.y1">اعتماد القوائم المالية وإصدار التقرير.</li>
+            <li data-i18n="cal.y2">مراجعات عقود وسياسات وإفصاحات.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DELIVERABLES -->
+  <section id="deliverables">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="deliv.title">المخرجات</h2>
+        <p class="sub" data-i18n="deliv.sub">إطار تقريري واضح واعتمادات نهائية.</p>
+      </div>
+      <div class="grid cols-2">
+        <div class="card reveal">
+          <h3 data-i18n="deliv.h1">تقرير المراجع</h3>
+          <p class="small" data-i18n="deliv.p1">تقرير مراجعة القوائم المالية + الإيضاحات المكملة.</p>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="deliv.h2">خطاب الإدارة</h3>
+          <p class="small" data-i18n="deliv.p2">عند وجود ملاحظات مهمة على الرقابة الداخلية.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEES & TERMS -->
+  <section id="fees">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="fees.title">الأتعاب والشروط</h2>
+        <p class="sub" data-i18n="fees.sub">زمن + مصاريف فعلية، وإعادة تقييم سنوي، واستثناءات واضحة.</p>
+      </div>
+      <div class="grid cols-3">
+        <div class="card reveal">
+          <h3 data-i18n="fees.h1">المنهجية</h3>
+          <ul class="small" style="margin:8px 0 0 18px">
+            <li data-i18n="fees.li1">تُحسَب بالوقت الفعلي لفريق العمل + المصاريف.</li>
+            <li data-i18n="fees.li2">خدمات خارج النطاق باتفاق تحريري منفصل.</li>
+            <li data-i18n="fees.li3">إعادة تقييم سنوي للأتعاب.</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="fees.h2">الاستثناءات</h3>
+          <ul class="small" style="margin:8px 0 0 18px">
+            <li data-i18n="fees.li4">لا تشمل مصاريف السفر خارج نطاق القاهرة الكبرى.</li>
+            <li data-i18n="fees.li5">لا تشمل أي مصروفات قضائية.</li>
+            <li data-i18n="fees.li6">لا تشمل 10% ضريبة قيمة مضافة.</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="fees.h3">نطاق إضافي</h3>
+          <p class="small" data-i18n="fees.p3">الخدمات المحاسبية/الضريبية غير المشمولة بالمراجعة تُسعَّر منفصلة مسبقًا.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAYMENT -->
+  <section id="payment">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="pay.title">شروط الدفع</h2>
+        <p class="sub" data-i18n="pay.sub">آلية صرف واضحة للتقارير السنوية والرسوم الدورية.</p>
+      </div>
+      <div class="grid cols-2">
+        <div class="card reveal">
+          <h3 data-i18n="pay.h1">تقارير سنوية</h3>
+          <p class="small" data-i18n="pay.p1">100% من أتعاب المراجعة عند إصدار تقرير القوائم المالية السنوية.</p>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="pay.h2">دوري/شهري</h3>
+          <p class="small" data-i18n="pay.p2">الرسوم الشهرية تُسدَّد كل ثلاثة أشهر مقدمًا.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="grid cols-2">
+        <div class="card reveal">
+          <h3 data-i18n="ct.h">جهات الاتصال</h3>
+          <div class="small" data-i18n="ct.addr">28 شارع مصر حلوان الزراعي – المعادي – القاهرة – برج المهندسين العسكريين
+          </div>
+          <div class="small"><span data-i18n="ct.tel1">+225247748</span> | <span data-i18n="ct.tel2">+2 01000088315 / +2
+              01111166636</span></div>
+          <div class="small"><a href="mailto:E.elmaghraby@eltourath.com">E.elmaghraby@eltourath.com</a></div>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="ct.h2">روابط سريعة</h3>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a class="btn" href="pricing.html" data-i18n="ct.l1">الأتعاب</a>
+            <a class="btn" href="tax.html" data-i18n="ct.l2">الضرائب</a>
+            <a class="btn primary" href="contact.html" data-i18n="ct.l3">راسلنا الآن</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container foot-cols">
+      <div>
+        <div class="brand" style="margin-bottom:8px">
+          <div class="logo" aria-hidden="true"></div>
+          <strong data-i18n="foot.name">مكتب إيمان المغربي</strong>
+        </div>
+        <div class="small" data-i18n="foot.copy">© جميع الحقوق محفوظة.</div>
+      </div>
+      <div class="small">
+        <div data-i18n="foot.note1">نلتزم بالقوانين والمعايير المصرية.</div>
+        <div data-i18n="foot.note2">تفاصيل البنود والأتعاب في الصفحات المتخصصة.</div>
+      </div>
+      <div class="small">
+        <div><a href="advisory.html" data-i18n="foot.link1">Advisory</a></div>
+        <div><a href="formation.html" data-i18n="foot.link2">Company Formation</a></div>
+        <div><a href="contact.html" data-i18n="foot.link3">Contact</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* i18n dictionary */
+    const i18n = {
+      ar: {
+        "brand.tag": "مكتب محاسبة ومراجعة", "brand.name": "مكتب إيمان المغربي",
+        "nav.home": "الرئيسية", "nav.audit": "التدقيق", "nav.tax": "الضرائب", "nav.consult": "الاستشارات", "nav.company": "تأسيس الشركات", "nav.assurance": "المعايير", "nav.pricing": "الأتعاب", "nav.contact": "التواصل",
+
+        "hero.kicker": "امتثال ومعايير | سياسات وواجبات", "hero.title": "منهجية امتثال محكومة بالمعايير المصرية والدولية",
+        "hero.lead": "نطبّق معايير المراجعة المصرية (وبما يتسق مع الدولية) مع تحديد واضح لمسؤوليات الإدارة وخطابات التأكيد، وسرية أوراق العمل، والإطار القانوني المصري، مع خطة التزامات تشغيلية مستمرة (VAT، كسب العمل/الخصم والإضافة، الفاتورة الإلكترونية).",
+        "hero.snap": "أُطر رقابية واضحة", "hero.li1": "مسؤولية الإدارة عن إعداد القوائم والسياسات.", "hero.li2": "تأكيدات مكتوبة + خطابات إدارة.", "hero.li3": "أوراق عمل ملك للمكتب وسرية.", "hero.li4": "اختصاص قضائي مصري صارم.", "hero.note": "ضمان معقول لا مطلق.",
+
+        "sub.framework": "إطار المعايير", "sub.resp": "مسؤوليات الإدارة", "sub.proc": "إجراءات المراجعة", "sub.letters": "خطابات الإدارة", "sub.wp": "أوراق العمل والسرية", "sub.legal": "الإطار القانوني", "sub.ops": "التزامات تشغيلية", "sub.calendar": "تقويم الامتثال", "sub.deliverables": "المخرجات", "sub.fees": "الأتعاب والشروط", "sub.payment": "الدفع", "sub.contact": "التواصل",
+
+        "fw.title": "إطار المعايير والامتثال", "fw.sub": "تطبيق المعايير المصرية للمراجعة وبما يتسق مع الدولية، مع ضمان معقول.", "fw.h1": "ضمان معقول", "fw.p1": "التخطيط والتنفيذ للحصول على ضمان معقول وليس مطلقًا بخصوص خلو القوائم من أخطاء جوهرية أو غش، مع تقرير أي مؤشرات مهمة إلى الإدارة.", "fw.cite1": "مرجعية: معايير المراجعة المصرية.", "fw.h2": "مسؤولية إعداد القوائم", "fw.p2": "إعداد القوائم والسياسات والتقديرات مسؤولية الإدارة، ودورنا رأي مهني فني وفق المعايير المصرية للمراجعة وإعداد القوائم.", "fw.h3": "خطابات التمثيل", "fw.p3": "الحصول على خطابات تأكيد مكتوبة من الإدارة يمثل جزءًا من دليل المراجعة.",
+
+        "resp.title": "مسؤوليات الإدارة", "resp.sub": "سجلات كافية، رقابة داخلية، سياسات محاسبية، وإفصاحات لازمة.", "resp.li1": "إعداد القوائم وفق المعايير المصرية وإتاحة البيانات كاملة.", "resp.li2": "اختيار وتطبيق السياسات المحاسبية والاحتفاظ بسجلات كافية.", "resp.li3": "التعاون في توقيتات إصدار تقرير المراجعة وتقديم التأكيدات المكتوبة.", "resp.note": "أي إخفاء/عدم دقة بالبيانات يقيّد مسؤوليتنا ويُبطل أي التزامات غير منصوص عليها صراحة.", "resp.badge": "تعاون الإدارة يؤثر على توقيت التقرير",
+
+        "proc.title": "ملامح إجراءات المراجعة", "proc.sub": "تخطيط قائم على فهم النشاط والهيكل والرقابة الداخلية.", "proc.h1": "فهم النشاط", "proc.p1": "طبيعة المعاملات + الهيكل التنظيمي + نقاط التركيز.", "proc.h2": "اختبارات وأدلة", "proc.p2": "فحص مستندات وأدلة، تقديرات مهمة، وعرض الإفصاحات.", "proc.h3": "اعتماد على الرقابة", "proc.p3": "نطاق وتوقيت الاختبارات يتغيران وفق فعالية الرقابة الداخلية.",
+
+        "ml.title": "خطابات الإدارة وتقارير التحسين", "ml.sub": "تنبيه بنواحي القصور أو فرص رفع الكفاءة مع توصيات عملية.", "ml.p": "عند رصد قصور أو فرص تحسين بالرقابة الداخلية أو التشغيل نرفقها بخطاب إدارة وتوصيات. ملاحظة: فحص الرقابة خارج النطاق الضروري لا تفرضه المعايير إلا بقدر ما يخدم تحديد طبيعة وإطار وتوقيت إجراءات المراجعة.", "ml.badge": "تقرير إدارة عند وجود مسائل مهمة",
+
+        "wp.title": "أوراق العمل والسرية", "wp.sub": "ملكية المكتب وسرية طبقًا لسياساتنا وإجراءاتنا.", "wp.h1": "ملكية أوراق العمل", "wp.p1": "أوراق العمل ملك للمكتب وتضم معلومات سرية.", "wp.h2": "سرية المعلومات", "wp.p2": "قصر الاستخدام على المجالات ذات الصلة وإمكان الإفصاح لفريق العمل بنفس الشروط.",
+
+        "lg.title": "الإطار القانوني والاختصاص", "lg.sub": "تطبيق كامل للقانون المصري واختصاص المحاكم المصرية.", "lg.p": "يخضع تعاملنا بأكمله للقوانين المصرية. أي بطلان جزئي لأي بند لا يؤثر على باقي البنود. أي نزاع ينعقد اختصاصه للمحاكم المصرية المختصة.", "lg.badge": "قابلية فصل البنود + اختصاص مصري",
+
+        "ops.title": "التزامات تشغيلية مستمرة", "ops.sub": "نُدير معكم الامتثال الدوري لما بعد المراجعة/التأسيس.", "ops.h1": "القيمة المضافة (VAT)", "ops.p1": "رفع الإقرار الشهري ومتابعة التسجيل عند الانطباق.", "ops.h2": "كسب العمل والخصم والإضافة", "ops.p2": "تسويات الرواتب والخصومات الشهرية الدورية.", "ops.h3": "الفاتورة الإلكترونية", "ops.p3": "تشغيل وربط منظومة الفاتورة الإلكترونية ومتابعتها.",
+
+        "cal.title": "تقويم امتثال نموذجي", "cal.sub": "تتغير التفاصيل حسب طبيعة النشاط وحجم العمليات.", "cal.m": "شهريًا", "cal.m1": "إقرار VAT (عند التسجيل).", "cal.m2": "تسويات كسب العمل والخصم والإضافة.", "cal.m3": "مراجعة بيانات الفاتورة الإلكترونية.", "cal.q": "ربع سنوي", "cal.q1": "مراجعة دورية للأرصدة والسياسات.", "cal.q2": "تسويات بنكية وتحسين ضوابط.", "cal.y": "سنويًا", "cal.y1": "اعتماد القوائم المالية وإصدار التقرير.", "cal.y2": "مراجعات عقود وسياسات وإفصاحات.",
+
+        "deliv.title": "المخرجات", "deliv.sub": "إطار تقريري واضح واعتمادات نهائية.", "deliv.h1": "تقرير المراجع", "deliv.p1": "تقرير مراجعة القوائم المالية + الإيضاحات المكملة.", "deliv.h2": "خطاب الإدارة", "deliv.p2": "عند وجود ملاحظات مهمة على الرقابة الداخلية.",
+
+        "fees.title": "الأتعاب والشروط", "fees.sub": "زمن + مصاريف فعلية، وإعادة تقييم سنوي، واستثناءات واضحة.", "fees.h1": "المنهجية", "fees.li1": "تُحسَب بالوقت الفعلي لفريق العمل + المصاريف.", "fees.li2": "خدمات خارج النطاق باتفاق تحريري منفصل.", "fees.li3": "إعادة تقييم سنوي للأتعاب.", "fees.h2": "الاستثناءات", "fees.li4": "لا تشمل مصاريف السفر خارج نطاق القاهرة الكبرى.", "fees.li5": "لا تشمل أي مصروفات قضائية.", "fees.li6": "لا تشمل 10% ضريبة قيمة مضافة.", "fees.h3": "نطاق إضافي", "fees.p3": "الخدمات المحاسبية/الضريبية غير المشمولة بالمراجعة تُسعَّر منفصلة مسبقًا.",
+
+        "pay.title": "شروط الدفع", "pay.sub": "آلية صرف واضحة للتقارير السنوية والرسوم الدورية.", "pay.h1": "تقارير سنوية", "pay.p1": "100% من أتعاب المراجعة عند إصدار تقرير القوائم المالية السنوية.", "pay.h2": "دوري/شهري", "pay.p2": "الرسوم الشهرية تُسدَّد كل ثلاثة أشهر مقدمًا.",
+
+        "ct.h": "جهات الاتصال", "ct.addr": "28 شارع مصر حلوان الزراعي – المعادي – القاهرة – برج المهندسين العسكريين", "ct.tel1": "+225247748", "ct.tel2": "+2 01000088315 / +2 01111166636", "ct.h2": "روابط سريعة", "ct.l1": "الأتعاب", "ct.l2": "الضرائب", "ct.l3": "راسلنا الآن",
+
+        "foot.name": "مكتب إيمان المغربي", "foot.copy": "© جميع الحقوق محفوظة.", "foot.note1": "نلتزم بالقوانين والمعايير المصرية.", "foot.note2": "تفاصيل البنود والأتعاب في الصفحات المتخصصة.", "foot.link1": "Advisory", "foot.link2": "Company Formation", "foot.link3": "Contact"
+      },
+      en: {
+        "brand.tag": "Accounting & Audit Office", "brand.name": "Eman El-Maghraby Office",
+        "nav.home": "Home", "nav.audit": "Audit", "nav.tax": "Tax", "nav.consult": "Advisory", "nav.company": "Company Formation", "nav.assurance": "Standards", "nav.pricing": "Pricing", "nav.contact": "Contact",
+
+        "hero.kicker": "Compliance & Standards | Policies & Duties", "hero.title": "Compliance methodology aligned with Egyptian & international standards",
+        "hero.lead": "We apply Egyptian Auditing Standards (aligned with ISA) with clear management responsibilities, written representations, confidential working papers, Egyptian legal frame, and ongoing operational compliance (VAT, payroll/WHT, e-invoice).",
+        "hero.snap": "Clear control framework", "hero.li1": "Management responsibility for FS & policies.", "hero.li2": "Written reps + management letters.", "hero.li3": "Working papers are confidential property.", "hero.li4": "Egyptian courts’ jurisdiction.", "hero.note": "Reasonable—not absolute—assurance.",
+
+        "sub.framework": "Framework", "sub.resp": "Responsibilities", "sub.proc": "Procedures", "sub.letters": "Mgmt letters", "sub.wp": "Working papers & confidentiality", "sub.legal": "Legal frame", "sub.ops": "Operational duties", "sub.calendar": "Compliance calendar", "sub.deliverables": "Deliverables", "sub.fees": "Fees & terms", "sub.payment": "Payment", "sub.contact": "Contact",
+
+        "fw.title": "Standards & compliance", "fw.sub": "Apply Egyptian Auditing Standards, aligned with ISA; reasonable assurance.", "fw.h1": "Reasonable assurance", "fw.p1": "Plan & perform to obtain reasonable, not absolute, assurance on FS free of material misstatement or fraud; report significant indications to management.", "fw.cite1": "Reference: Egyptian Auditing Standards.", "fw.h2": "FS preparation", "fw.p2": "Management prepares FS, policies, and estimates; our role is a technical opinion under Egyptian standards.", "fw.h3": "Written representations", "fw.p3": "Written reps from management form part of the audit evidence.",
+
+        "resp.title": "Management responsibilities", "resp.sub": "Adequate records, internal control, accounting policies, and proper disclosures.", "resp.li1": "Prepare FS per Egyptian standards and provide complete data.", "resp.li2": "Select/apply accounting policies and keep adequate records.", "resp.li3": "Cooperate on timeline and provide written confirmations.", "resp.note": "Concealment/inaccuracy limits our liability beyond the explicit terms.", "resp.badge": "Management cooperation impacts report timing",
+
+        "proc.title": "Audit procedures at a glance", "proc.sub": "Planning based on activity, structure, and internal control.", "proc.h1": "Understanding the business", "proc.p1": "Transactions, structure, and focus areas.", "proc.h2": "Tests & evidence", "proc.p2": "Docs, estimates, and presentation review.", "proc.h3": "Reliance on controls", "proc.p3": "Nature/timing/extent vary with control effectiveness.",
+
+        "ml.title": "Management letters", "ml.sub": "Flag control gaps and efficiency opportunities with practical recommendations.", "ml.p": "When we note control gaps or improvement areas, we issue a management letter with recommendations. Standards don’t require testing controls beyond what’s necessary to plan procedures.", "ml.badge": "Issued where significant matters exist",
+
+        "wp.title": "Working papers & confidentiality", "wp.sub": "Office property under strict confidentiality.", "wp.h1": "Ownership", "wp.p1": "Working papers belong to the office and contain confidential information.", "wp.h2": "Confidentiality", "wp.p2": "Use limited to relevant areas; may disclose to our team under same terms.",
+
+        "lg.title": "Legal framework & jurisdiction", "lg.sub": "Fully governed by Egyptian law and courts.", "lg.p": "Our engagement is governed by Egyptian law. Partial invalidity doesn’t affect remaining terms. Disputes fall under Egyptian courts’ jurisdiction.", "lg.badge": "Severability + Egyptian jurisdiction",
+
+        "ops.title": "Ongoing operational duties", "ops.sub": "We help you stay compliant post-audit/formation.", "ops.h1": "Value-Added Tax (VAT)", "ops.p1": "Monthly VAT returns; registration where applicable.", "ops.h2": "Payroll & WHT", "ops.p2": "Payroll adjustments and monthly deductions/additions.", "ops.h3": "E-invoice", "ops.p3": "Onboarding and platform linkage with ongoing checks.",
+
+        "cal.title": "Typical compliance calendar", "cal.sub": "Details may vary by activity and size.", "cal.m": "Monthly", "cal.m1": "VAT return (if registered).", "cal.m2": "Payroll/WHT reconciliations.", "cal.m3": "E-invoice data review.", "cal.q": "Quarterly", "cal.q1": "Balance/policy review.", "cal.q2": "Bank reconciliations & control tuning.", "cal.y": "Annually", "cal.y1": "FS approval & audit report.", "cal.y2": "Contracts/policies/disclosures review.",
+
+        "deliv.title": "Deliverables", "deliv.sub": "Clear reporting framework and final approvals.", "deliv.h1": "Auditor’s report", "deliv.p1": "Audit report on FS with notes.", "deliv.h2": "Management letter", "deliv.p2": "When notable control matters exist.",
+
+        "fees.title": "Fees & terms", "fees.sub": "Time + actual expenses; annual re-evaluation; explicit exclusions.", "fees.h1": "Method", "fees.li1": "Time-based plus actual expenses.", "fees.li2": "Out-of-scope via separate written agreement.", "fees.li3": "Annual re-evaluation.", "fees.h2": "Exclusions", "fees.li4": "Travel outside Greater Cairo excluded.", "fees.li5": "Judicial expenses excluded.", "fees.li6": "10% VAT excluded.", "fees.h3": "Additional scope", "fees.p3": "Non-audit accounting/tax services priced separately in advance.",
+
+        "pay.title": "Payment terms", "pay.sub": "Clear mechanism for annual and periodic fees.", "pay.h1": "Annual reports", "pay.p1": "100% of audit fees on audit-report release.", "pay.h2": "Periodic/monthly", "pay.p2": "Monthly fees paid quarterly in advance.",
+
+        "ct.h": "Contacts", "ct.addr": "28 Misr Helwan Agricultural St., Maadi, Cairo – Military Engineers Tower", "ct.tel1": "+225247748", "ct.tel2": "+2 01000088315 / +2 01111166636", "ct.h2": "Quick links", "ct.l1": "Pricing", "ct.l2": "Tax", "ct.l3": "Contact us now",
+
+        "foot.name": "Eman El-Maghraby Office", "foot.copy": "© All rights reserved.", "foot.note1": "We comply with Egyptian standards & law.", "foot.note2": "See dedicated pages for full terms and fees.", "foot.link1": "Advisory", "foot.link2": "Company Formation", "foot.link3": "Contact"
+      }
+    };
+
+    /* Toggles & reveal */
+    const $html = document.documentElement;
+    const $langToggle = document.getElementById('langToggle');
+    const $themeToggle = document.getElementById('themeToggle');
+
+    function applyI18n(lang) {
+      const map = i18n[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const k = el.getAttribute('data-i18n'); if (map[k]) el.textContent = map[k];
+      });
+      $html.setAttribute('lang', lang); $html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+      localStorage.setItem('lang', lang);
+      $langToggle.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+    }
+    function applyTheme(theme) {
+      document.body.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+      localStorage.setItem('theme', theme);
+      $themeToggle.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.theme === theme));
+    }
+    $langToggle.addEventListener('click', e => { if (e.target.matches('button[data-lang]')) applyI18n(e.target.dataset.lang); });
+    $themeToggle.addEventListener('click', e => { if (e.target.matches('button[data-theme]')) applyTheme(e.target.dataset.theme); });
+
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) { en.target.classList.add('in-view'); io.unobserve(en.target); }
+      });
+    }, { threshold: .2 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Subnav active state
+    const pills = Array.from(document.querySelectorAll('.subnav .pill'));
+    const sections = ['framework', 'responsibilities', 'procedures', 'mgmtletters', 'workpapers', 'legal', 'ops', 'calendar', 'deliverables', 'fees', 'payment', 'contact']
+      .map(id => document.getElementById(id));
+    const obs = new IntersectionObserver((ents) => {
+      ents.forEach(e => {
+        if (e.isIntersecting) {
+          pills.forEach(p => p.classList.toggle('active', p.getAttribute('href') === '#' + e.target.id));
+        }
+      });
+    }, { threshold: .4 });
+    sections.forEach(s => s && obs.observe(s));
+
+    // Init
+    (function () {
+      applyI18n(localStorage.getItem('lang') || 'ar');
+      applyTheme(localStorage.getItem('theme') || 'light');
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    })();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,1052 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <link rel="icon" type="image/png" href="images/logo.png" />
+  <script>
+    (function () {
+      // لو أنت حالياً على /home.html، اظهرها /home من غير إعادة تحميل
+      if (/\.html$/.test(location.pathname)) {
+        history.replaceState(null, '', location.pathname.replace(/\.html$/, '') + location.search + location.hash);
+      }
+    })();
+  </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>مكتب إيمان المغربي | الاستشارات والنظم</title>
+  <meta name="description"
+    content="تصميم النظم المحاسبية والدورات المستندية واللوائح المالية والإدارية والداخلية، نظم الرقابة الداخلية، التقارير لجميع المستويات الإدارية، والمراجعة القانونية والمالية للعقود مع التنفيذ والتدريب." />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --muted: #f6f7fb;
+      --text: #0f172a;
+      --sub: #475569;
+      --brand: #5b7cfa;
+      --brand2: #7c3aed;
+      --accent: #fbbf24;
+      --card: #ffffff;
+      --border: #e5e7eb;
+      --shadow: 0 10px 25px rgba(2, 6, 23, .08);
+      --ok: #16a34a;
+      --warn: #f59e0b;
+      --bad: #ef4444;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0b1020;
+      --muted: #0f1426;
+      --text: #e5e7eb;
+      --sub: #9aa7bd;
+      --brand: #8aa2ff;
+      --brand2: #a78bfa;
+      --accent: #fcd34d;
+      --card: #121a33;
+      --border: #1f2a44;
+      --shadow: 0 10px 25px rgba(0, 0, 0, .45);
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Arial
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    .container {
+      width: min(1200px, 92%);
+      margin: auto
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      backdrop-filter: saturate(180%) blur(10px);
+      background: color-mix(in oklab, var(--bg) 86%, transparent);
+      border-bottom: 1px solid var(--border)
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 0
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px color-mix(in oklab, var(--brand) 35%, transparent);
+      background: conic-gradient(from 210deg, var(--brand), var(--brand2), var(--accent), var(--brand))
+    }
+
+    .navlinks {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap
+    }
+
+    .navlinks a {
+      padding: 8px 10px;
+      border-radius: 10px
+    }
+
+    .navlinks a:hover {
+      background: var(--muted)
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      align-items: center
+    }
+
+    .toggle {
+      display: inline-flex;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      overflow: hidden
+    }
+
+    .toggle button {
+      padding: 8px 12px;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      color: var(--text)
+    }
+
+    .toggle button.active {
+      background: var(--muted);
+      font-weight: 700
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform .2s, box-shadow .2s
+    }
+
+    .btn:hover {
+      transform: translateY(-2px)
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      color: #fff;
+      border: 0;
+      box-shadow: 0 10px 28px color-mix(in oklab, var(--brand) 35%, transparent)
+    }
+
+    .btn.ghost {
+      background: transparent
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 68px 0 28px;
+      background:
+        radial-gradient(650px 300px at 80% -20%, color-mix(in oklab, var(--brand2) 18%, transparent), transparent 60%),
+        radial-gradient(520px 240px at -10% 10%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 60%)
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 30px;
+      align-items: center
+    }
+
+    h1 {
+      font-size: clamp(28px, 3.2vw, 42px);
+      line-height: 1.2;
+      margin: 8px 0 12px
+    }
+
+    .kicker {
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--brand2)
+    }
+
+    .lead {
+      color: var(--sub)
+    }
+
+    .hero-card {
+      border: 1px solid var(--border);
+      background: var(--card);
+      padding: 18px;
+      border-radius: 16px;
+      box-shadow: var(--shadow)
+    }
+
+    .tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap
+    }
+
+    .tag {
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--card)
+    }
+
+    .glow {
+      position: absolute;
+      inset: auto -20% -20% -20%;
+      height: 200px;
+      filter: blur(40px);
+      background: linear-gradient(90deg, color-mix(in oklab, var(--brand) 25%, transparent), color-mix(in oklab, var(--accent) 20%, transparent));
+      opacity: .35;
+      pointer-events: none
+    }
+
+    /* Sections */
+    section {
+      padding: 54px 0;
+      border-top: 1px solid var(--border)
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px
+    }
+
+    .section-head h2 {
+      font-size: clamp(22px, 2.6vw, 30px);
+      margin: 0
+    }
+
+    .sub {
+      color: var(--sub)
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px
+    }
+
+    .cols-2 {
+      grid-template-columns: repeat(2, 1fr)
+    }
+
+    .cols-3 {
+      grid-template-columns: repeat(3, 1fr)
+    }
+
+    .cols-4 {
+      grid-template-columns: repeat(4, 1fr)
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      transition: transform .2s, box-shadow .2s, border-color .2s
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, .12);
+      border-color: color-mix(in oklab, var(--brand) 35%, var(--border))
+    }
+
+    .small {
+      font-size: 14px;
+      color: var(--sub)
+    }
+
+    .chip {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 12px;
+      padding: 6px 8px;
+      border-radius: 999px;
+      background: var(--muted)
+    }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .6s, transform .6s
+    }
+
+    .reveal.in-view {
+      opacity: 1;
+      transform: none
+    }
+
+    /* Subnav */
+    .subnav {
+      position: sticky;
+      top: 60px;
+      z-index: 95;
+      background: var(--muted);
+      border-bottom: 1px solid var(--border)
+    }
+
+    .subnav .wrap {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 8px 0
+    }
+
+    .pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      cursor: pointer
+    }
+
+    .pill:hover {
+      transform: translateY(-1px)
+    }
+
+    .pill.active {
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      color: #fff;
+      border: 0
+    }
+
+    /* Timeline & rows */
+    .timeline .step {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px;
+      align-items: start
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: var(--brand);
+      margin-top: 8px;
+      box-shadow: 0 0 0 4px color-mix(in oklab, var(--brand) 20%, transparent)
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px
+    }
+
+    /* Footer */
+    footer {
+      padding: 28px 0 40px;
+      border-top: 1px solid var(--border);
+      background: var(--muted)
+    }
+
+    .foot-cols {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: 1.2fr 1fr 1fr
+    }
+
+    /* إطار اللوجو + نفس الglow */
+    .logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: conic-gradient(from 210deg, var(--brand), var(--brand2), var(--accent), var(--brand));
+      box-shadow: 0 6px 18px color-mix(in oklab, var(--brand) 35%, transparent);
+      padding: 2px;
+      /* حافة رفيعة حول الصورة */
+      display: inline-grid;
+      place-items: center;
+    }
+
+    .logo-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      object-fit: contain;
+      /* يراعي نسبة الصورة */
+      background: #fff;
+      /* خلفية بيضا لو الشعار شفاف */
+    }
+
+    /* تصغير على الموبايل زي قبل */
+    @media (max-width:640px) {
+      .brand .logo {
+        width: 34px;
+        height: 34px
+      }
+
+      .brand .logo .logo-img {
+        border-radius: 7px
+      }
+    }
+
+    @media (max-width: 960px) {
+
+      .hero-grid,
+      .cols-2,
+      .cols-3,
+      .cols-4,
+      .foot-cols,
+      .row {
+        grid-template-columns: 1fr
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-label="Logo">
+          <img src="images/logo.png" alt="Eman El-Maghraby Office" class="logo-img" />
+        </div>
+        <div>
+          <div class="kicker" data-i18n="brand.tag">مكتب محاسبة ومراجعة</div>
+          <strong data-i18n="brand.name">مكتب إيمان المغربي</strong>
+        </div>
+      </div>
+      <nav class="navlinks">
+        <a href="index.html" data-i18n="nav.home">الرئيسية</a>
+        <a href="audit.html" data-i18n="nav.audit">التدقيق</a>
+        <a href="tax.html" data-i18n="nav.tax">الضرائب</a>
+        <a class="btn" style="padding:6px 10px" href="advisory.html" data-i18n="nav.consult">الاستشارات والنظم</a>
+        <a href="formation.html" data-i18n="nav.company">تأسيس الشركات</a>
+        <a href="compliance.html" data-i18n="nav.assurance">المعايير</a>
+        <a href="pricing.html" data-i18n="nav.pricing">الأتعاب</a>
+        <a href="contact.html" data-i18n="nav.contact">التواصل</a>
+      </nav>
+      <div class="actions">
+        <div class="toggle" id="langToggle" role="group" aria-label="Language">
+          <button data-lang="ar" class="active">ع</button><button data-lang="en">En</button>
+        </div>
+        <div class="toggle" id="themeToggle" role="group" aria-label="Theme">
+          <button data-theme="light" class="active" title="Light">☀️</button><button data-theme="dark"
+            title="Dark">🌙</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="reveal">
+        <div class="kicker" data-i18n="hero.kicker">استشارات مالية وإدارية وقانونية</div>
+        <h1 data-i18n="hero.title">نظم محاسبية قوية + رقابة داخلية + تقارير تنفيذية</h1>
+        <p class="lead" data-i18n="hero.lead">
+          فريق الاستشارات والنظم يقدّم تصميمًا وتنفيذًا متكاملًا: نظم محاسبة، دورات مستندية، لوائح مالية وإدارية
+          وداخلية، نظم رقابة داخلية، وتقارير على جميع المستويات—مع مراجعة قانونية ومالية للعقود قبل التوقيع.
+        </p>
+        <div class="tags">
+          <span class="tag" data-i18n="hero.t1">Accounting Systems</span>
+          <span class="tag" data-i18n="hero.t2">Internal Controls</span>
+          <span class="tag" data-i18n="hero.t3">Management Reports</span>
+          <span class="tag" data-i18n="hero.t4">Legal & Financial Review</span>
+        </div>
+        <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn primary" href="#pillars" data-i18n="hero.btn1">ابدأ بالمحاور</a>
+          <a class="btn" href="#checklists" data-i18n="hero.btn2">قائمة المتطلبات</a>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="hero-card small">
+          <div><strong data-i18n="hero.snap">لماذا مكتب إيمان المغربي؟</strong></div>
+          <ul style="margin:8px 0 0 18px">
+            <li data-i18n="hero.li1">خبرة تصميم نظم لشركات وهيئات كبرى.</li>
+            <li data-i18n="hero.li2">تقارير تخاطب كل المستويات الإدارية.</li>
+            <li data-i18n="hero.li3">مراجعة عقود قانونية ومالية قبل التوقيع.</li>
+            <li data-i18n="hero.li4">تنفيذ الأنظمة المصممة حتى تحقيق الأهداف.</li>
+          </ul>
+          <div class="chip" data-i18n="hero.note">وفق القوانين المصرية ذات الصلة.</div>
+        </div>
+      </div>
+    </div>
+    <div class="glow" aria-hidden="true"></div>
+  </section>
+
+  <!-- In-page subnav -->
+  <div class="subnav">
+    <div class="container wrap">
+      <a class="pill active" href="#pillars" data-i18n="sub.pillars">محاور الخدمة</a>
+      <a class="pill" href="#systems" data-i18n="sub.systems">تصميم النظم</a>
+      <a class="pill" href="#reports" data-i18n="sub.reports">التقارير الإدارية</a>
+      <a class="pill" href="#controls" data-i18n="sub.controls">الرقابة والحوكمة</a>
+      <a class="pill" href="#contracts" data-i18n="sub.contracts">مراجعة العقود</a>
+      <a class="pill" href="#implementation" data-i18n="sub.impl">التنفيذ والتدريب</a>
+      <a class="pill" href="#timeline" data-i18n="sub.timeline">الخط الزمني</a>
+      <a class="pill" href="#checklists" data-i18n="sub.list">المتطلبات</a>
+      <a class="pill" href="#pricing" data-i18n="sub.price">الأتعاب</a>
+      <a class="pill" href="#cta" data-i18n="sub.cta">تواصل</a>
+    </div>
+  </div>
+
+  <!-- PILLARS -->
+  <section id="pillars">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="pillars.title">محاور الخدمة الاستشارية</h2>
+        <p class="sub" data-i18n="pillars.sub">تخطيط، تصميم، توثيق، رقابة، وتقارير—من الفكرة إلى التطبيق.</p>
+      </div>
+      <div class="grid cols-3">
+        <div class="card reveal">
+          <h3 data-i18n="pillars.p1.h">تصميم نظم المحاسبة</h3>
+          <p class="small" data-i18n="pillars.p1.p">إعداد نظم محاسبية متكاملة، دليل حسابات، مراكز تكلفة، دورات قيد حتى
+            التقارير المالية.</p>
+          <span class="chip" data-i18n="pillars.badge1">من المستند الأول للتقرير</span>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="pillars.p2.h">الدورات المستندية</h3>
+          <p class="small" data-i18n="pillars.p2.p">توثيق تدفقات المشتريات، المبيعات، الخزائن، البنوك، الأصول، المخزون،
+            الموارد البشرية.</p>
+          <span class="chip" data-i18n="pillars.badge2">توثيق وتقييس الإجراءات</span>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="pillars.p3.h">لوائح مالية وإدارية وداخلية</h3>
+          <p class="small" data-i18n="pillars.p3.p">صياغة لوائح الصلاحيات، الصرف، المشتريات، السفر، العهد، المُخصصات،
+            الجزاءات، وغيرها.</p>
+          <span class="chip" data-i18n="pillars.badge3">دليل سياسات وإجراءات</span>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="pillars.p4.h">نظم الرقابة الداخلية</h3>
+          <p class="small" data-i18n="pillars.p4.p">تصميم ضوابط، تقييم التزام، تحديد نقاط الضعف وقياس الأثر، وخطط
+            معالجة.</p>
+          <span class="chip" data-i18n="pillars.badge4">امتثال وتحسين</span>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="pillars.p5.h">تقارير لكل المستويات</h3>
+          <p class="small" data-i18n="pillars.p5.p">تصميم تقارير تشغيلية/إدارية/تنفيذية: هوامش، تدفقات، مؤشرات أداء.</p>
+          <span class="chip" data-i18n="pillars.badge5">خطاب إدارة عند الحاجة</span>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="pillars.p6.h">مراجعة قانونية ومالية للعقود</h3>
+          <p class="small" data-i18n="pillars.p6.p">فحص تعاقدات الجهات المختلفة وإبداء الرأي القانوني والمالي قبل
+            التوقيع.</p>
+          <span class="chip" data-i18n="pillars.badge6">وقاية من المخاطر</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SYSTEMS DESIGN -->
+  <section id="systems">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="systems.title">تصميم النظم وإعداد الوثائق</h2>
+        <p class="sub" data-i18n="systems.sub">تحليل الوضع الحالي، إعادة هندسة العمليات، وبناء وثائق تشغيل قابلة
+          للتنفيذ.</p>
+      </div>
+      <div class="grid cols-2">
+        <div class="card reveal">
+          <h3 data-i18n="systems.h1">نطاق العمل</h3>
+          <ul class="small" style="margin:8px 0 0 18px">
+            <li data-i18n="systems.li1">تحليل دورة المستند من المصدر وحتى التقارير.</li>
+            <li data-i18n="systems.li2">دليل حسابات ومراكز تكلفة وربطها بالتقارير.</li>
+            <li data-i18n="systems.li3">ربط المخزون، المبيعات، المشتريات، الخزائن، البنوك، الأصول.</li>
+            <li data-i18n="systems.li4">تصميم سياسات الموافقات والسلطات.</li>
+          </ul>
+          <span class="chip" data-i18n="systems.badge">التطبيق وفق القوانين المصرية</span>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="systems.h2">مخرجات قابلة للتطبيق</h3>
+          <ul class="small" style="margin:8px 0 0 18px">
+            <li data-i18n="systems.o1">خرائط عمليات ورسوم انسياب.</li>
+            <li data-i18n="systems.o2">كتيّب سياسات وإجراءات (لوائح مالية/إدارية/داخلية).</li>
+            <li data-i18n="systems.o3">نماذج وتنسيقات وتقارير قياسية.</li>
+            <li data-i18n="systems.o4">خطة تنفيذ وتدريب ومؤشرات نجاح.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MANAGEMENT REPORTS -->
+  <section id="reports">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="reports.title">التقارير الإدارية وخطابات الإدارة</h2>
+        <p class="sub" data-i18n="reports.sub">تصميم تقارير تخاطب الإدارة التشغيلية والمتوسطة والتنفيذية—مع توصيات قابلة
+          للتنفيذ.</p>
+      </div>
+      <div class="grid cols-3">
+        <div class="card reveal">
+          <h3 data-i18n="reports.h1">تقارير تشغيلية</h3>
+          <p class="small" data-i18n="reports.p1">حركة يومية/أسبوعية، أعمار الديون، دوران المخزون، الهامش.</p>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="reports.h2">تقارير إدارية</h3>
+          <p class="small" data-i18n="reports.p2">موازنات، انحرافات، مؤشرات أداء رئيسية، تدفقات نقدية.</p>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="reports.h3">خطابات إدارة</h3>
+          <p class="small" data-i18n="reports.p3">عرض نقاط تحسين الرقابة، الكفاءة، والفاعلية، وتتبّع الإغلاق.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTROLS & GOVERNANCE -->
+  <section id="controls">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="controls.title">نظم الرقابة الداخلية والحوكمة</h2>
+        <p class="sub" data-i18n="controls.sub">تقييم الالتزام، تحديد نقاط الضعف، ودعم خطط المعالجة دون تعطيل التشغيل.
+        </p>
+      </div>
+      <div class="grid cols-2">
+        <div class="card reveal">
+          <h3 data-i18n="controls.h1">التقييم والتحسين</h3>
+          <ul class="small" style="margin:8px 0 0 18px">
+            <li data-i18n="controls.li1">فحص نظام الرقابة الداخلية الموضوع وتقييم الالتزام بالتطبيق.</li>
+            <li data-i18n="controls.li2">تحديد نقاط الضعف ودراسة الآثار وقياس المخاطر.</li>
+            <li data-i18n="controls.li3">مواءمة الضوابط مع استراتيجيات العمل.</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="controls.h2">السرية والامتثال</h3>
+          <p class="small" data-i18n="controls.p2">العمل وفق سرية وأوراق عمل مملوكة للمكتب؛ أحكام مصرية نافذة؛ قابلية
+            فصل البنود الباطلة دون الإضرار بالباقي.</p>
+          <span class="chip" data-i18n="controls.badge">اختصاص المحاكم المصرية</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTRACTS REVIEW -->
+  <section id="contracts">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="contracts.title">المراجعة القانونية والمالية للعقود</h2>
+        <p class="sub" data-i18n="contracts.sub">فحص عقود الجهات المختلفة وإبداء الرأي القانوني والمالي قبل التوقيع—للحد
+          من مخاطر الالتزام والتكلفة.</p>
+      </div>
+      <div class="grid cols-2">
+        <div class="card reveal">
+          <h3 data-i18n="contracts.h1">قبل التوقيع</h3>
+          <p class="small" data-i18n="contracts.p1">مراجعة الشروط، الجزاءات، التسعير، شروط الدفع، الضمانات، التزامات
+            الخدمة.</p>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="contracts.h2">بعد التعاقد</h3>
+          <p class="small" data-i18n="contracts.p2">مطابقة التنفيذ، التوثيق، وإدارة المطالبات أو التسويات عند الحاجة.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPLEMENTATION -->
+  <section id="implementation">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="impl.title">التنفيذ والتدريب ونقل المعرفة</h2>
+        <p class="sub" data-i18n="impl.sub">نُشرف على التطبيق العملي للأنظمة المصممة حتى تحقق النتائج المتفق عليها.</p>
+      </div>
+      <div class="grid cols-3">
+        <div class="card reveal">
+          <h3 data-i18n="impl.h1">Plan → Pilot</h3>
+          <p class="small" data-i18n="impl.p1">خطة تنفيذ، تشغيل تجريبي على وحدة/فرع، تصحيح قبل التعميم.</p>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="impl.h2">Rollout</h3>
+          <p class="small" data-i18n="impl.p2">تعميم الإجراءات والنماذج وإغلاق فجوات التطبيق.</p>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="impl.h3">Training</h3>
+          <p class="small" data-i18n="impl.p3">دورات تدريبية موجهة حسب الدور الوظيفي مع أدلة مختصرة.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="timeline">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="time.title">الخط الزمني النموذجي للمهمة</h2>
+        <p class="sub" data-i18n="time.sub">يتغيّر حسب الحجم وعدد الفروع وطبيعة النشاط.</p>
+      </div>
+      <div class="card reveal">
+        <div class="timeline">
+          <div class="step">
+            <div class="dot"></div>
+            <div><strong data-i18n="time.s1">1) دراسة أولية ونطاق</strong>
+              <div class="small" data-i18n="time.s1p">اجتماع تعريفي + قائمة مستندات + خطة.</div>
+            </div>
+          </div>
+          <div class="step" style="margin-top:12px">
+            <div class="dot"></div>
+            <div><strong data-i18n="time.s2">2) تحليل الفجوات</strong>
+              <div class="small" data-i18n="time.s2p">مراجعة الوضع الحالي وتوصيات مبدئية.</div>
+            </div>
+          </div>
+          <div class="step" style="margin-top:12px">
+            <div class="dot"></div>
+            <div><strong data-i18n="time.s3">3) تصميم الأنظمة</strong>
+              <div class="small" data-i18n="time.s3p">سياسات، إجراءات، نماذج، تقارير.</div>
+            </div>
+          </div>
+          <div class="step" style="margin-top:12px">
+            <div class="dot"></div>
+            <div><strong data-i18n="time.s4">4) اعتماد وإطلاق تجريبي</strong>
+              <div class="small" data-i18n="time.s4p">اعتماد الوثائق وتشغيل تجريبي ومراجعة.</div>
+            </div>
+          </div>
+          <div class="step" style="margin-top:12px">
+            <div class="dot"></div>
+            <div><strong data-i18n="time.s5">5) التعميم والتدريب</strong>
+              <div class="small" data-i18n="time.s5p">تعميم على الإدارات والفروع وتدريب الأدوار.</div>
+            </div>
+          </div>
+          <div class="step" style="margin-top:12px">
+            <div class="dot"></div>
+            <div><strong data-i18n="time.s6">6) متابعة وتحسين</strong>
+              <div class="small" data-i18n="time.s6p">مؤشرات نجاح وخطاب إدارة وتحسينات.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHECKLISTS -->
+  <section id="checklists">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="list.title">قوائم المتطلبات التفصيلية (استشارات ونظم)</h2>
+        <p class="sub" data-i18n="list.sub">نبدأ بهذه القائمة، ثم نخصّصها بعد دراسة نشاطكم.</p>
+      </div>
+      <div class="grid cols-2">
+        <div class="card reveal">
+          <h3 data-i18n="list.h1">مستندات أساسية</h3>
+          <ul class="small" style="margin:8px 0 0 18px">
+            <li data-i18n="list.li1">الهيكل التنظيمي وتوصيف الوظائف.</li>
+            <li data-i18n="list.li2">الوضع الحالي للدورات المستندية لكل دورة رئيسية.</li>
+            <li data-i18n="list.li3">التقارير الحالية ونماذجها واحتياجات الإدارة.</li>
+            <li data-i18n="list.li4">العقود الجوهرية وسياسات الموافقات.</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="list.h2">بيانات تشغيل</h3>
+          <ul class="small" style="margin:8px 0 0 18px">
+            <li data-i18n="list.li5">حركة المبيعات/المشتريات والمخزون والخزائن والبنوك.</li>
+            <li data-i18n="list.li6">دليل الحسابات ومراكز التكلفة والأصول الثابتة.</li>
+            <li data-i18n="list.li7">سياسات الرواتب والبدلات وإجراءات الموارد البشرية.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="price.title">الأتعاب والاشتراطات (ملخص)</h2>
+        <p class="sub" data-i18n="price.sub">الأتعاب تُحدَّد بالوقت والمصاريف الفعلية وتُراجع سنويًا؛ تُستثنى رحلات خارج
+          القاهرة الكبرى والمصاريف القضائية؛ لا تشمل 10% VAT.</p>
+      </div>
+      <div class="grid cols-2">
+        <div class="card reveal">
+          <h3 data-i18n="price.h1">نطاق الاستشارات</h3>
+          <p class="small" data-i18n="price.p1">يُوقّع نطاق مستقل للخدمات خارج النطاق الأساسي مع رسوم متفق عليها مسبقًا.
+          </p>
+          <span class="chip" data-i18n="price.badge1">اتفاقات منفصلة للخدمات الإضافية</span>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="price.h2">شروط الدفع</h3>
+          <ul class="small" style="margin:8px 0 0 18px">
+            <li data-i18n="price.li1">الدفع وفق تقدم العمل أو جداول متفق عليها.</li>
+            <li data-i18n="price.li2">أتعاب خارج/قضايا تُفصّل عند الحاجة.</li>
+          </ul>
+          <span class="chip" data-i18n="price.badge2">تسعير بعد التقييم</span>
+        </div>
+      </div>
+      <div class="small" style="margin-top:8px" data-i18n="price.legal">
+        تخضع العلاقة للقوانين المصرية والاختصاص القضائي للمحاكم المصرية؛ البنود الباطلة لا تؤثر على باقي الشروط.
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <div class="container">
+      <div class="grid cols-2">
+        <div class="card reveal">
+          <h3 data-i18n="cta.h">جاهزين للتنفيذ</h3>
+          <p class="small" data-i18n="cta.p">أرسلوا تفاصيل نشاطكم والحجم لنبدأ بخطة تفصيلية وجدول زمني.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a class="btn primary" href="contact.html" data-i18n="cta.btn1">صفحة التواصل</a>
+            <a class="btn" href="pricing.html" data-i18n="cta.btn2">الأتعاب</a>
+          </div>
+        </div>
+        <div class="card reveal">
+          <h3 data-i18n="cta.h2">صفحات ذات صلة</h3>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a class="btn" href="audit.html" data-i18n="cta.l1">التدقيق</a>
+            <a class="btn" href="tax.html" data-i18n="cta.l2">الضرائب</a>
+            <a class="btn" href="formation.html" data-i18n="cta.l3">تأسيس الشركات</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container foot-cols">
+      <div>
+        <div class="brand" style="margin-bottom:8px">
+          <div class="logo" aria-hidden="true"></div>
+          <strong data-i18n="foot.name">مكتب إيمان المغربي</strong>
+        </div>
+        <div class="small" data-i18n="foot.copy">© جميع الحقوق محفوظة.</div>
+      </div>
+      <div class="small">
+        <div data-i18n="foot.note1">نلتزم بالقوانين والمعايير المصرية.</div>
+        <div data-i18n="foot.note2">تفاصيل البنود والأتعاب في الصفحات المتخصصة.</div>
+      </div>
+      <div class="small">
+        <div><a href="audit.html" data-i18n="foot.link1">Audit</a></div>
+        <div><a href="tax.html" data-i18n="foot.link2">Tax</a></div>
+        <div><a href="contact.html" data-i18n="foot.link3">Contact</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* i18n dictionary */
+    const i18n = {
+      ar: {
+        "brand.tag": "مكتب محاسبة ومراجعة", "brand.name": "مكتب إيمان المغربي",
+        "nav.home": "الرئيسية", "nav.audit": "التدقيق", "nav.tax": "الضرائب", "nav.consult": "الاستشارات والنظم", "nav.company": "تأسيس الشركات", "nav.assurance": "المعايير", "nav.pricing": "الأتعاب", "nav.contact": "التواصل",
+
+        "hero.kicker": "استشارات مالية وإدارية وقانونية", "hero.title": "نظم محاسبية قوية + رقابة داخلية + تقارير تنفيذية",
+        "hero.lead": "فريق الاستشارات والنظم يقدّم تصميمًا وتنفيذًا متكاملًا: نظم محاسبة، دورات مستندية، لوائح مالية وإدارية وداخلية، نظم رقابة داخلية، وتقارير على جميع المستويات—مع مراجعة قانونية ومالية للعقود قبل التوقيع.",
+        "hero.t1": "نظم محاسبية", "hero.t2": "رقابة داخلية", "hero.t3": "تقارير إدارية", "hero.t4": "مراجعة قانونية/مالية",
+        "hero.btn1": "ابدأ بالمحاور", "hero.btn2": "قائمة المتطلبات", "hero.snap": "لماذا مكتب إيمان المغربي؟",
+        "hero.li1": "خبرة تصميم نظم لشركات وهيئات كبرى.", "hero.li2": "تقارير تخاطب كل المستويات الإدارية.", "hero.li3": "مراجعة عقود قانونية ومالية قبل التوقيع.", "hero.li4": "تنفيذ الأنظمة المصممة حتى تحقيق الأهداف.",
+        "hero.note": "وفق القوانين المصرية ذات الصلة.",
+
+        "sub.pillars": "محاور الخدمة", "sub.systems": "تصميم النظم", "sub.reports": "التقارير الإدارية", "sub.controls": "الرقابة والحوكمة", "sub.contracts": "مراجعة العقود", "sub.impl": "التنفيذ والتدريب", "sub.timeline": "الخط الزمني", "sub.list": "المتطلبات", "sub.price": "الأتعاب", "sub.cta": "تواصل",
+
+        "pillars.title": "محاور الخدمة الاستشارية", "pillars.sub": "تخطيط، تصميم، توثيق، رقابة، وتقارير—من الفكرة إلى التطبيق.",
+        "pillars.p1.h": "تصميم نظم المحاسبة", "pillars.p1.p": "إعداد نظم محاسبية متكاملة، دليل حسابات، مراكز تكلفة، دورات قيد حتى التقارير المالية.", "pillars.badge1": "من المستند الأول للتقرير",
+        "pillars.p2.h": "الدورات المستندية", "pillars.p2.p": "توثيق تدفقات المشتريات، المبيعات، الخزائن، البنوك، الأصول، المخزون، الموارد البشرية.", "pillars.badge2": "توثيق وتقييس الإجراءات",
+        "pillars.p3.h": "لوائح مالية وإدارية وداخلية", "pillars.p3.p": "صياغة لوائح الصلاحيات، الصرف، المشتريات، السفر، العهد، المُخصصات، الجزاءات، وغيرها.", "pillars.badge3": "دليل سياسات وإجراءات",
+        "pillars.p4.h": "نظم الرقابة الداخلية", "pillars.p4.p": "تصميم ضوابط، تقييم التزام، تحديد نقاط الضعف وقياس الأثر، وخطط معالجة.", "pillars.badge4": "امتثال وتحسين",
+        "pillars.p5.h": "تقارير لكل المستويات", "pillars.p5.p": "تصميم تقارير تشغيلية/إدارية/تنفيذية: هوامش، تدفقات، مؤشرات أداء.", "pillars.badge5": "خطاب إدارة عند الحاجة",
+        "pillars.p6.h": "مراجعة قانونية ومالية للعقود", "pillars.p6.p": "فحص تعاقدات الجهات المختلفة وإبداء الرأي القانوني والمالي قبل التوقيع.", "pillars.badge6": "وقاية من المخاطر",
+
+        "systems.title": "تصميم النظم وإعداد الوثائق", "systems.sub": "تحليل الوضع الحالي، إعادة هندسة العمليات، وبناء وثائق تشغيل قابلة للتنفيذ.",
+        "systems.h1": "نطاق العمل", "systems.li1": "تحليل دورة المستند من المصدر وحتى التقارير.", "systems.li2": "دليل حسابات ومراكز تكلفة وربطها بالتقارير.", "systems.li3": "ربط المخزون، المبيعات، المشتريات، الخزائن، البنوك، الأصول.", "systems.li4": "تصميم سياسات الموافقات والسلطات.",
+        "systems.h2": "مخرجات قابلة للتطبيق", "systems.o1": "خرائط عمليات ورسوم انسياب.", "systems.o2": "كتيّب سياسات وإجراءات (لوائح مالية/إدارية/داخلية).", "systems.o3": "نماذج وتنسيقات وتقارير قياسية.", "systems.o4": "خطة تنفيذ وتدريب ومؤشرات نجاح.",
+        "systems.badge": "التطبيق وفق القوانين المصرية",
+
+        "reports.title": "التقارير الإدارية وخطابات الإدارة", "reports.sub": "تصميم تقارير تخاطب الإدارة التشغيلية والمتوسطة والتنفيذية—مع توصيات قابلة للتنفيذ.",
+        "reports.h1": "تقارير تشغيلية", "reports.p1": "حركة يومية/أسبوعية، أعمار الديون، دوران المخزون، الهامش.",
+        "reports.h2": "تقارير إدارية", "reports.p2": "موازنات، انحرافات، مؤشرات أداء رئيسية، تدفقات نقدية.",
+        "reports.h3": "خطابات إدارة", "reports.p3": "عرض نقاط تحسين الرقابة، الكفاءة، والفاعلية، وتتبّع الإغلاق.",
+
+        "controls.title": "نظم الرقابة الداخلية والحوكمة", "controls.sub": "تقييم الالتزام، تحديد نقاط الضعف، ودعم خطط المعالجة دون تعطيل التشغيل.",
+        "controls.h1": "التقييم والتحسين", "controls.li1": "فحص نظام الرقابة الداخلية الموضوع وتقييم الالتزام بالتطبيق.", "controls.li2": "تحديد نقاط الضعف ودراسة الآثار وقياس المخاطر.", "controls.li3": "مواءمة الضوابط مع استراتيجيات العمل.",
+        "controls.h2": "السرية والامتثال", "controls.p2": "العمل وفق سرية وأوراق عمل مملوكة للمكتب؛ أحكام مصرية نافذة؛ قابلية فصل البنود الباطلة دون الإضرار بالباقي.", "controls.badge": "اختصاص المحاكم المصرية",
+
+        "contracts.title": "المراجعة القانونية والمالية للعقود", "contracts.sub": "فحص عقود الجهات المختلفة وإبداء الرأي القانوني والمالي قبل التوقيع—للحد من مخاطر الالتزام والتكلفة.",
+        "contracts.h1": "قبل التوقيع", "contracts.p1": "مراجعة الشروط، الجزاءات، التسعير، شروط الدفع، الضمانات، التزامات الخدمة.",
+        "contracts.h2": "بعد التعاقد", "contracts.p2": "مطابقة التنفيذ، التوثيق، وإدارة المطالبات أو التسويات عند الحاجة.",
+
+        "impl.title": "التنفيذ والتدريب ونقل المعرفة", "impl.sub": "نُشرف على التطبيق العملي للأنظمة المصممة حتى تحقق النتائج المتفق عليها.",
+        "impl.h1": "Plan → Pilot", "impl.p1": "خطة تنفيذ، تشغيل تجريبي على وحدة/فرع، تصحيح قبل التعميم.",
+        "impl.h2": "Rollout", "impl.p2": "تعميم الإجراءات والنماذج وإغلاق فجوات التطبيق.",
+        "impl.h3": "Training", "impl.p3": "دورات تدريبية موجهة حسب الدور الوظيفي مع أدلة مختصرة.",
+
+        "time.title": "الخط الزمني النموذجي للمهمة", "time.sub": "يتغيّر حسب الحجم وعدد الفروع وطبيعة النشاط.",
+        "time.s1": "1) دراسة أولية ونطاق", "time.s1p": "اجتماع تعريفي + قائمة مستندات + خطة.",
+        "time.s2": "2) تحليل الفجوات", "time.s2p": "مراجعة الوضع الحالي وتوصيات مبدئية.",
+        "time.s3": "3) تصميم الأنظمة", "time.s3p": "سياسات، إجراءات، نماذج، تقارير.",
+        "time.s4": "4) اعتماد وإطلاق تجريبي", "time.s4p": "اعتماد الوثائق وتشغيل تجريبي ومراجعة.",
+        "time.s5": "5) التعميم والتدريب", "time.s5p": "تعميم على الإدارات والفروع وتدريب الأدوار.",
+        "time.s6": "6) متابعة وتحسين", "time.s6p": "مؤشرات نجاح وخطاب إدارة وتحسينات.",
+
+        "list.title": "قوائم المتطلبات التفصيلية (استشارات ونظم)", "list.sub": "نبدأ بهذه القائمة، ثم نخصّصها بعد دراسة نشاطكم.",
+        "list.h1": "مستندات أساسية", "list.li1": "الهيكل التنظيمي وتوصيف الوظائف.", "list.li2": "الوضع الحالي للدورات المستندية لكل دورة رئيسية.", "list.li3": "التقارير الحالية ونماذجها واحتياجات الإدارة.", "list.li4": "العقود الجوهرية وسياسات الموافقات.",
+        "list.h2": "بيانات تشغيل", "list.li5": "حركة المبيعات/المشتريات والمخزون والخزائن والبنوك.", "list.li6": "دليل الحسابات ومراكز التكلفة والأصول الثابتة.", "list.li7": "سياسات الرواتب والبدلات وإجراءات الموارد البشرية.",
+
+        "price.title": "الأتعاب والاشتراطات (ملخص)", "price.sub": "الأتعاب تُحدَّد بالوقت والمصاريف الفعلية وتُراجع سنويًا؛ تُستثنى رحلات خارج القاهرة الكبرى والمصاريف القضائية؛ لا تشمل 10% VAT.",
+        "price.h1": "نطاق الاستشارات", "price.p1": "يُوقّع نطاق مستقل للخدمات خارج النطاق الأساسي مع رسوم متفق عليها مسبقًا.", "price.badge1": "اتفاقات منفصلة للخدمات الإضافية",
+        "price.h2": "شروط الدفع", "price.li1": "الدفع وفق تقدم العمل أو جداول متفق عليها.", "price.li2": "أتعاب خارج/قضايا تُفصّل عند الحاجة.", "price.badge2": "تسعير بعد التقييم",
+        "price.legal": "تخضع العلاقة للقوانين المصرية والاختصاص القضائي للمحاكم المصرية؛ البنود الباطلة لا تؤثر على باقي الشروط.",
+
+        "cta.h": "جاهزين للتنفيذ", "cta.p": "أرسلوا تفاصيل نشاطكم والحجم لنبدأ بخطة تفصيلية وجدول زمني.", "cta.btn1": "صفحة التواصل", "cta.btn2": "الأتعاب",
+        "cta.h2": "صفحات ذات صلة", "cta.l1": "التدقيق", "cta.l2": "الضرائب", "cta.l3": "تأسيس الشركات",
+
+        "foot.name": "مكتب إيمان المغربي", "foot.copy": "© جميع الحقوق محفوظة.", "foot.note1": "نلتزم بالقوانين والمعايير المصرية.", "foot.note2": "تفاصيل البنود والأتعاب في الصفحات المتخصصة."
+      },
+      en: {
+        "brand.tag": "Accounting & Audit Office", "brand.name": "Eman El-Maghraby Office",
+        "nav.home": "Home", "nav.audit": "Audit", "nav.tax": "Tax", "nav.consult": "Advisory & Systems", "nav.company": "Company Formation", "nav.assurance": "Standards", "nav.pricing": "Pricing", "nav.contact": "Contact",
+
+        "hero.kicker": "Financial, Administrative & Legal Advisory", "hero.title": "Robust accounting systems + internal control + executive reporting",
+        "hero.lead": "The Advisory & Systems team designs and implements end-to-end solutions: accounting systems, document flows, financial/administrative/internal bylaws, internal controls, and reports for all management levels—with legal & financial contract review before signing.",
+        "hero.t1": "Accounting Systems", "hero.t2": "Internal Controls", "hero.t3": "Management Reports", "hero.t4": "Legal/Financial Review",
+        "hero.btn1": "Explore pillars", "hero.btn2": "Document checklist", "hero.snap": "Why Eman El-Maghraby?",
+        "hero.li1": "System design for major companies & authorities.", "hero.li2": "Reports addressing all management levels.", "hero.li3": "Pre-signature legal & financial reviews.", "hero.li4": "Supervised rollout until target outcomes.",
+        "hero.note": "Aligned with applicable Egyptian laws.",
+
+        "sub.pillars": "Pillars", "sub.systems": "Systems Design", "sub.reports": "Management Reports", "sub.controls": "Controls & Governance", "sub.contracts": "Contracts Review", "sub.impl": "Implementation & Training", "sub.timeline": "Timeline", "sub.list": "Checklists", "sub.price": "Pricing", "sub.cta": "Contact",
+
+        "pillars.title": "Advisory service pillars", "pillars.sub": "Plan, design, document, control, and report—from idea to execution.",
+        "pillars.p1.h": "Accounting systems design", "pillars.p1.p": "Integrated systems, chart of accounts, cost centers, entries-to-reports.", "pillars.badge1": "From source doc to FS",
+        "pillars.p2.h": "Documentary flows", "pillars.p2.p": "Purchases, sales, cash, banks, fixed assets, inventory, HR.", "pillars.badge2": "Standardized procedures",
+        "pillars.p3.h": "Financial/administrative/internal bylaws", "pillars.p3.p": "Authorities, disbursements, procurement, travel, custody, provisions, sanctions.", "pillars.badge3": "Policies & procedures handbook",
+        "pillars.p4.h": "Internal control systems", "pillars.p4.p": "Control design, compliance testing, weakness identification & impact assessment.", "pillars.badge4": "Compliance & improvement",
+        "pillars.p5.h": "Reports for all levels", "pillars.p5.p": "Operational/managerial/executive KPIs: margins, flows, liquidity.", "pillars.badge5": "Management letter when needed",
+        "pillars.p6.h": "Legal & financial contract review", "pillars.p6.p": "Review contracts and provide legal/financial opinions before signing.", "pillars.badge6": "Risk mitigation",
+
+        "systems.title": "Systems design & documentation", "systems.sub": "As-is analysis, process re-engineering, executable playbooks.",
+        "systems.h1": "Scope", "systems.li1": "End-to-end document flow analysis.", "systems.li2": "Chart of accounts & cost centers linked to reports.", "systems.li3": "Integrations across inventory, sales, purchases, cash, banks, fixed assets.", "systems.li4": "Approval workflows and authorities.",
+        "systems.h2": "Deliverables", "systems.o1": "Process maps & flowcharts.", "systems.o2": "Policies & procedures handbook (financial/administrative/internal).", "systems.o3": "Standard templates and report packs.", "systems.o4": "Implementation/training plan with success metrics.",
+        "systems.badge": "Executed under Egyptian regulations",
+
+        "reports.title": "Management reports & letters", "reports.sub": "Design report suites for operational, managerial and executive needs—paired with actionable recommendations.",
+        "reports.h1": "Operational", "reports.p1": "Daily/weekly movement, receivables aging, inventory turns, margin.",
+        "reports.h2": "Managerial", "reports.p2": "Budgets, variances, KPIs, cash flows.",
+        "reports.h3": "Management letters", "reports.p3": "Control, efficiency and effectiveness improvements with tracked closure.",
+
+        "controls.title": "Internal control & governance", "controls.sub": "Compliance testing, weakness analysis, remediation plans without disrupting operations.",
+        "controls.h1": "Assessment & enhancement", "controls.li1": "Test existing internal control and compliance.", "controls.li2": "Identify weaknesses, analyze impacts, quantify risks.", "controls.li3": "Align controls with business strategy.",
+        "controls.h2": "Confidentiality & law", "controls.p2": "Confidential working papers; Egyptian law; severability of any invalid terms.", "controls.badge": "Egyptian courts jurisdiction",
+
+        "contracts.title": "Legal & financial contracts review", "contracts.sub": "Pre-signature review to minimize compliance and cost risks.",
+        "contracts.h1": "Before signing", "contracts.p1": "Terms, penalties, pricing, payments, guarantees, service obligations.",
+        "contracts.h2": "Post-signing", "contracts.p2": "Execution matching, documentation, claims/settlements where needed.",
+
+        "impl.title": "Implementation, training & knowledge transfer", "impl.sub": "We supervise practical rollout until the agreed outcomes are delivered.",
+        "impl.h1": "Plan → Pilot", "impl.p1": "Implementation plan, pilot on one unit/branch, fix before scale.",
+        "impl.h2": "Rollout", "impl.p2": "Standardize procedures & templates, close adoption gaps.",
+        "impl.h3": "Training", "impl.p3": "Role-based training with quick-reference guides.",
+
+        "time.title": "Typical engagement timeline", "time.sub": "Varies with size, branches and activity.",
+        "time.s1": "1) Scoping & intake", "time.s1p": "Intro meeting, checklist, plan.",
+        "time.s2": "2) Gap analysis", "time.s2p": "Current-state review and initial recommendations.",
+        "time.s3": "3) System design", "time.s3p": "Policies, procedures, templates, reports.",
+        "time.s4": "4) Approval & pilot", "time.s4p": "Approve docs, pilot run and review.",
+        "time.s5": "5) Rollout & training", "time.s5p": "Organization/branches rollout and role training.",
+        "time.s6": "6) Follow-up & improvement", "time.s6p": "Success metrics, management letter and enhancements.",
+
+        "list.title": "Detailed checklists (Advisory/Systems)", "list.sub": "Kick off with this list, then tailor after scoping.",
+        "list.h1": "Core documents", "list.li1": "Org chart & job descriptions.", "list.li2": "Current flows for each main cycle.", "list.li3": "Current reports & needs by management.", "list.li4": "Key contracts & approval policies.",
+        "list.h2": "Operating data", "list.li5": "Sales/purchases, inventory, cash, banks movement.", "list.li6": "Chart of accounts, cost centers, fixed assets.", "list.li7": "Payroll policies/allowances & HR procedures.",
+
+        "price.title": "Fees & terms (snapshot)", "price.sub": "Time-based with actual expenses; annual review; excludes Greater-Cairo travel & judicial expenses; excludes 10% VAT.",
+        "price.h1": "Advisory scope", "price.p1": "Separate SoW for out-of-scope services with pre-agreed fees.", "price.badge1": "Separate agreements for extras",
+        "price.h2": "Payment terms", "price.li1": "Milestone-based or scheduled payments.", "price.li2": "Court/extra-scope charges itemized when needed.", "price.badge2": "Scoping before pricing",
+        "price.legal": "Subject to Egyptian law; Egyptian courts jurisdiction; severability applies.",
+
+        "cta.h": "Ready to execute", "cta.p": "Share your activity and size to receive a detailed plan & timeline.", "cta.btn1": "Contact page", "cta.btn2": "Pricing",
+        "cta.h2": "Related pages", "cta.l1": "Audit", "cta.l2": "Tax", "cta.l3": "Company Formation",
+
+        "foot.name": "Eman El-Maghraby Office", "foot.copy": "© All rights reserved.", "foot.note1": "We comply with Egyptian standards & law.", "foot.note2": "See dedicated pages for full terms and fees."
+      }
+    };
+
+    /* Toggles & reveal */
+    const $html = document.documentElement;
+    const $langToggle = document.getElementById('langToggle');
+    const $themeToggle = document.getElementById('themeToggle');
+
+    function applyI18n(lang) {
+      const map = i18n[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const k = el.getAttribute('data-i18n'); if (map[k]) el.textContent = map[k];
+      });
+      $html.setAttribute('lang', lang); $html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+      localStorage.setItem('lang', lang);
+      $langToggle.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+    }
+    function applyTheme(theme) {
+      document.body.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+      localStorage.setItem('theme', theme);
+      $themeToggle.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.theme === theme));
+    }
+    $langToggle.addEventListener('click', e => { if (e.target.matches('button[data-lang]')) applyI18n(e.target.dataset.lang); });
+    $themeToggle.addEventListener('click', e => { if (e.target.matches('button[data-theme]')) applyTheme(e.target.dataset.theme); });
+
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) { en.target.classList.add('in-view'); io.unobserve(en.target); }
+      });
+    }, { threshold: .2 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Subnav active state
+    const pills = Array.from(document.querySelectorAll('.subnav .pill'));
+    const sections = ['pillars', 'systems', 'reports', 'controls', 'contracts', 'implementation', 'timeline', 'checklists', 'pricing', 'cta']
+      .map(id => document.getElementById(id));
+    const obs = new IntersectionObserver((ents) => {
+      ents.forEach(e => {
+        if (e.isIntersecting) {
+          pills.forEach(p => p.classList.toggle('active', p.getAttribute('href') === '#' + e.target.id));
+        }
+      });
+    }, { threshold: .4 });
+    sections.forEach(s => s && obs.observe(s));
+
+    // Init
+    (function () {
+      applyI18n(localStorage.getItem('lang') || 'ar');
+      applyTheme(localStorage.getItem('theme') || 'light');
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    })();
+  </script>
+</body>
+
+</html>
