@@ -414,6 +414,48 @@
       background: #fff;
       /* خلفية بيضا لو الشعار شفاف */
     }
+/* ===== Mobile sidebar ===== */
+.menu-btn{ display:none; }
+.sidebar{
+  position:fixed; inset-block:0; inset-inline-end:0;
+  width:min(86vw, 320px); background:var(--card);
+  border-inline-start:1px solid var(--border);
+  transform:translateX(100%); transition:transform .25s ease;
+  z-index:120; padding:14px;
+  box-shadow: var(--shadow);
+  display: none;
+}
+.sidebar.open{ transform:translateX(0); display: block; }
+.sidebar .side-head{
+  display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px;
+}
+.sidebar .side-title{ font-weight:800; }
+.sidebar .close-btn{
+  background:transparent; border:0; font-size:20px; cursor:pointer; color:var(--text);
+}
+.sidebar .side-body a{
+  display:block; padding:12px 12px; border-radius:10px; margin:2px 0;
+  border:1px solid transparent;
+}
+.sidebar .side-body a:hover{ background:var(--muted); }
+.sidebar .side-body a.btn{ /* شيل ستايل الزرار جوه السايدبار */
+  border:0; background:transparent; box-shadow:none; font-weight:700; padding:12px 12px;
+}
+
+.overlay{
+  position:fixed; inset:0; background:rgba(2,6,23,.45);
+  opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:110;
+}
+.overlay.show{ opacity:1; pointer-events:auto; }
+
+body.no-scroll{ overflow:hidden; }
+
+/* ===== إخفاء عناصر على الموبايل ===== */
+@media (max-width: 960px){
+  .navlinks{ display:none !important; }   /* اخفاء روابط التوب ناف على الموبايل */
+  .subnav{ display:none !important; }     /* اخفاء السوب ناف على الموبايل */
+  .menu-btn{ display:inline-flex; }       /* إظهار زرار المنيو على الموبايل */
+}
 
     /* تصغير على الموبايل زي قبل */
     @media (max-width:640px) {
@@ -463,6 +505,10 @@
         <a href="pricing.html" data-i18n="nav.pricing">الأتعاب</a>
         <a class="btn" style="padding:6px 10px" href="contact.html" data-i18n="nav.contact">التواصل</a>
       </nav>
+      <button id="menuBtn" class="btn ghost menu-btn" aria-controls="mobileSidebar" aria-expanded="false" aria-label="فتح القائمة">
+  ☰
+</button>
+
       <div class="actions">
         <div class="toggle" id="langToggle" role="group" aria-label="Language">
           <button data-lang="ar" class="active">ع</button><button data-lang="en">En</button>
@@ -474,6 +520,15 @@
       </div>
     </div>
   </header>
+<div id="overlay" class="overlay" hidden></div>
+
+<aside id="mobileSidebar" class="sidebar" aria-hidden="true">
+  <div class="side-head">
+    <div class="side-title" data-i18n="brand.name">مكتب إيمان المغربي</div>
+    <button class="close-btn" id="closeSidebar" aria-label="إغلاق">×</button>
+  </div>
+  <nav class="side-body" id="sideNav"><!-- هيتملَى تلقائي --></nav>
+</aside>
 
   <!-- HERO -->
   <section class="hero">
@@ -732,6 +787,47 @@
   </footer>
 
   <script>
+    // ===== Mobile sidebar logic =====
+const menuBtn   = document.getElementById('menuBtn');
+const sidebar   = document.getElementById('mobileSidebar');
+const sideNav   = document.getElementById('sideNav');
+const overlayEl = document.getElementById('overlay');
+const closeBtn  = document.getElementById('closeSidebar');
+
+// انسخ روابط الـnav الحالية للسايدبار (نفس الداتا- i18n هتفضل شغالة)
+const topNav = document.querySelector('.navlinks');
+if (topNav && sideNav) {
+  sideNav.innerHTML = topNav.innerHTML;
+}
+
+function openSidebar(){
+  sidebar.classList.add('open');
+  overlayEl.hidden = false;
+  requestAnimationFrame(()=> overlayEl.classList.add('show'));
+  document.body.classList.add('no-scroll');
+  menuBtn.setAttribute('aria-expanded','true');
+  sidebar.setAttribute('aria-hidden','false');
+}
+
+function closeSidebar(){
+  sidebar.classList.remove('open');
+  overlayEl.classList.remove('show');
+  overlayEl.addEventListener('transitionend', () => overlayEl.hidden = true, { once:true });
+  document.body.classList.remove('no-scroll');
+  menuBtn.setAttribute('aria-expanded','false');
+  sidebar.setAttribute('aria-hidden','true');
+}
+
+menuBtn?.addEventListener('click', openSidebar);
+closeBtn?.addEventListener('click', closeSidebar);
+overlayEl?.addEventListener('click', closeSidebar);
+document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeSidebar(); });
+
+// اقفل السايدبار عند الضغط على أي لينك جوّاه
+sideNav?.addEventListener('click', (e)=>{
+  if (e.target.matches('a')) closeSidebar();
+});
+
     /* i18n */
     const i18n = {
       ar: {

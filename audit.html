@@ -72,7 +72,7 @@
     header {
       position: sticky;
       top: 0;
-      z-index: 40;
+      z-index: 60;
       backdrop-filter: saturate(180%) blur(10px);
       background: color-mix(in oklab, var(--bg) 86%, transparent);
       border-bottom: 1px solid var(--border)
@@ -168,6 +168,21 @@
     .toggle button.active {
       background: var(--muted);
       font-weight: 700
+    }
+
+    /* mobile menu button */
+    .menu-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      font-size: 20px;
+      cursor: pointer;
     }
 
     /* hero */
@@ -366,30 +381,105 @@
       height: 100%;
       border-radius: 8px;
       object-fit: contain;
-      /* يراعي نسبة الصورة */
-      /* خلفية بيضا لو الشعار شفاف */
     }
 
-    /* تصغير على الموبايل زي قبل */
-    @media (max-width:640px) {
-      .brand .logo {
-        width: 34px;
-        height: 34px
-      }
+    /*
+      ─────────────────────────────────────
+      Mobile Drawer (Sidebar)
+      ─────────────────────────────────────
+    */
+    #drawerOverlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 23, .45);
+      backdrop-filter: blur(2px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease;
+      z-index: 80;
+    }
 
-      .brand .logo .logo-img {
-        border-radius: 7px
-      }
+    #drawer {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      right: 0; /* RTL: من اليمين */
+      width: min(86vw, 320px);
+      background: var(--card);
+      border-left: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      transform: translateX(100%);
+      transition: transform .25s ease;
+      z-index: 90;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    #drawer header {
+      position: relative;
+      border-bottom: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    #drawer .m-nav {
+      display: grid;
+      padding: 16px;
+      gap: 8px;
+    }
+
+    #drawer .m-nav a {
+      padding: 12px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    #drawer .m-nav a.active,
+    #drawer .m-nav a:hover {
+      background: var(--muted);
+    }
+
+    #drawer .m-foot {
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #drawerClose {
+      position: absolute;
+      top: 10px;
+      left: 10px; /* RTL */
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      cursor: pointer;
+    }
+
+    body[data-drawer="open"] #drawerOverlay { opacity: 1; pointer-events: auto; }
+    body[data-drawer="open"] #drawer { transform: none; }
+    body[data-drawer="open"] { overflow: hidden; }
+
+    /* Hide horizontal pills bar on small screens (لو موجودة في أي صفحة) */
+    @media (max-width:640px) {
+      .subnav .wrap { display: none !important; }
     }
 
     /* responsive */
     @media (max-width:960px) {
-
       .cols-2,
       .cols-3,
       .foot-cols {
         grid-template-columns: 1fr
       }
+
+      /* على الموبايل: خبي اللينكات العلوية واظهر زرار المنيو */
+      .navlinks { display: none; }
+      .menu-btn { display: inline-flex; }
     }
   </style>
 </head>
@@ -420,13 +510,40 @@
             data-lang="en">En</button></div>
         <div class="toggle" id="themeToggle"><button data-theme="light" class="active">☀️</button><button
             data-theme="dark">🌙</button></div>
+        <button id="menuBtn" class="menu-btn" aria-label="القائمة" aria-controls="drawer" aria-expanded="false">☰</button>
       </div>
     </div>
   </header>
 
+  <!-- Mobile Drawer (Sidebar) -->
+  <div id="drawerOverlay" aria-hidden="true"></div>
+  <aside id="drawer" role="dialog" aria-modal="true" aria-label="القائمة الجانبية">
+    <header class="container" style="padding:12px 16px; display:flex; align-items:center; gap:10px;">
+      <div class="logo" aria-hidden="true"></div>
+      <strong data-i18n="brand.name">مكتب إيمان المغربي</strong>
+      <button id="drawerClose" aria-label="إغلاق">✕</button>
+    </header>
+    <nav class="m-nav" aria-label="روابط الموقع">
+      <!-- السايدبار للموبايل يحتوي الروابط دي فقط -->
+      <a href="index.html" data-i18n="nav.home">الرئيسية</a>
+      <a href="#" class="active" data-i18n="nav.audit">التدقيق والمراجعة</a>
+      <a href="tax.html" data-i18n="nav.tax">الضرائب</a>
+      <a href="advisory.html" data-i18n="nav.consult">الاستشارات والنظم</a>
+      <a href="formation.html" data-i18n="nav.company">تأسيس الشركات/التأمينات</a>
+      <a href="compliance.html" data-i18n="nav.assurance">المعايير والالتزام</a>
+      <a href="contact.html" data-i18n="nav.contact">التواصل</a>
+    </nav>
+    <div class="m-foot">
+      <div class="toggle" id="langToggleMobile"><button data-lang="ar" class="active">ع</button><button
+          data-lang="en">En</button></div>
+      <div class="toggle" id="themeToggleMobile"><button data-theme="light" class="active">☀️</button><button
+          data-theme="dark">🌙</button></div>
+    </div>
+  </aside>
+
   <main>
     <!-- HERO -->
-    <section class="hero">
+    <section class="hero" id="hero">
       <div class="container">
         <div class="reveal">
           <div class="kicker" data-i18n="hero.kicker">التزام مهني شامل</div>
@@ -441,7 +558,7 @@
     </section>
 
     <!-- SCOPE -->
-    <section>
+    <section id="scope">
       <div class="container">
         <div class="section-head">
           <h2 data-i18n="scope.title">نطاق وأساليب المراجعة</h2>
@@ -502,7 +619,7 @@
     </section>
 
     <!-- RESPONSIBILITIES -->
-    <section>
+    <section id="resp">
       <div class="container">
         <div class="section-head">
           <h2 data-i18n="resp.title">مسؤوليات الإدارة والتعاون</h2>
@@ -534,7 +651,7 @@
     </section>
 
     <!-- OUTPUTS & CONFIDENTIALITY -->
-    <section>
+    <section id="outputs">
       <div class="container">
         <div class="section-head">
           <h2 data-i18n="out.title">مخرجات المراجعة والسرية</h2>
@@ -571,7 +688,7 @@
     </section>
 
     <!-- CTA -->
-    <section>
+    <section id="cta">
       <div class="container">
         <div class="grid cols-2">
           <div class="card reveal">
@@ -719,35 +836,64 @@
       });
       $html.setAttribute('lang', lang); $html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
       localStorage.setItem('lang', lang);
-      $langToggle.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+      [$langToggle, document.getElementById('langToggleMobile')].forEach(tg => {
+        if (!tg) return; tg.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+      });
     }
     $langToggle.addEventListener('click', e => {
+      if (e.target.matches('button[data-lang]')) applyI18n(e.target.dataset.lang);
+    });
+
+    // mirror in-drawer lang toggle
+    const $langToggleMobile = document.getElementById('langToggleMobile');
+    $langToggleMobile.addEventListener('click', e => {
       if (e.target.matches('button[data-lang]')) applyI18n(e.target.dataset.lang);
     });
 
     function applyTheme(theme) {
       document.body.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
       localStorage.setItem('theme', theme);
-      $themeToggle.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.theme === theme));
+      [$themeToggle, document.getElementById('themeToggleMobile')].forEach(tg => {
+        if (!tg) return; tg.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.theme === theme));
+      });
     }
     $themeToggle.addEventListener('click', e => {
+      if (e.target.matches('button[data-theme]')) applyTheme(e.target.dataset.theme);
+    });
+    const $themeToggleMobile = document.getElementById('themeToggleMobile');
+    $themeToggleMobile.addEventListener('click', e => {
       if (e.target.matches('button[data-theme]')) applyTheme(e.target.dataset.theme);
     });
 
     // accordions
     document.querySelectorAll('.acc .acc-h').forEach(h => {
-      h.addEventListener('click', () => {
-        h.parentElement.classList.toggle('active');
-      });
+      h.addEventListener('click', () => { h.parentElement.classList.toggle('active'); });
     });
 
     // reveal on scroll
     const io = new IntersectionObserver(entries => {
-      entries.forEach(en => {
-        if (en.isIntersecting) { en.target.classList.add('in-view'); io.unobserve(en.target); }
-      });
+      entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in-view'); io.unobserve(en.target); } });
     }, { threshold: .2 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Mobile drawer logic
+    const menuBtn = document.getElementById('menuBtn');
+    const drawer = document.getElementById('drawer');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+    const drawerClose = document.getElementById('drawerClose');
+
+    function openDrawer() {
+      document.body.setAttribute('data-drawer', 'open');
+      menuBtn.setAttribute('aria-expanded', 'true');
+    }
+    function closeDrawer() {
+      document.body.removeAttribute('data-drawer');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    }
+    menuBtn.addEventListener('click', openDrawer);
+    drawerClose.addEventListener('click', closeDrawer);
+    drawerOverlay.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrawer(); });
 
     // init
     (function () {

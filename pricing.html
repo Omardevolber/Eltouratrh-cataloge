@@ -99,7 +99,18 @@
       height: 40px;
       border-radius: 10px;
       box-shadow: 0 6px 18px color-mix(in oklab, var(--brand) 35%, transparent);
-      background: conic-gradient(from 210deg, var(--brand), var(--brand2), var(--accent), var(--brand))
+      background: conic-gradient(from 210deg, var(--brand), var(--brand2), var(--accent), var(--brand));
+      padding: 2px;
+      display: inline-grid;
+      place-items: center
+    }
+
+    .logo-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      object-fit: contain;
+      background: #fff
     }
 
     .navlinks {
@@ -166,6 +177,81 @@
       color: #fff;
       border: 0;
       box-shadow: 0 10px 28px color-mix(in oklab, var(--brand) 35%, transparent)
+    }
+
+    /* Hamburger + Sidebar */
+    .hamburger {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      cursor: pointer
+    }
+
+    #overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .45);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s;
+      z-index: 70
+    }
+
+    #overlay.show {
+      opacity: 1;
+      pointer-events: auto
+    }
+
+    #sidebar {
+      position: fixed;
+      top: 0;
+      height: 100dvh;
+      width: min(85vw, 360px);
+      background: var(--card);
+      border-inline-start: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      transform: translateX(100%);
+      transition: transform .25s;
+      z-index: 80;
+      padding: 14px;
+      overflow: auto
+    }
+
+    html[dir="ltr"] #sidebar {
+      transform: translateX(-100%);
+      left: 0;
+      border-inline-start: none;
+      border-inline-end: 1px solid var(--border)
+    }
+
+    html[dir="rtl"] #sidebar {
+      right: 0
+    }
+
+    #sidebar.open {
+      transform: translateX(0)
+    }
+
+    #sidebar h3 {
+      margin: 6px 4px 12px;
+      font-size: 16px;
+      color: var(--sub)
+    }
+
+    #sideList {
+      display: grid;
+      gap: 12px
+    }
+
+    #sideList .card {
+      padding: 12px;
+      border-radius: 12px
     }
 
     /* Hero */
@@ -342,30 +428,16 @@
       grid-template-columns: 1.2fr 1fr 1fr
     }
 
-    .logo {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      background: conic-gradient(from 210deg, var(--brand), var(--brand2), var(--accent), var(--brand));
-      box-shadow: 0 6px 18px color-mix(in oklab, var(--brand) 35%, transparent);
-      padding: 2px;
-      /* حافة رفيعة حول الصورة */
-      display: inline-grid;
-      place-items: center;
-    }
-
-    .logo-img {
-      width: 100%;
-      height: 100%;
-      border-radius: 8px;
-      object-fit: contain;
-      /* يراعي نسبة الصورة */
-      background: #fff;
-      /* خلفية بيضا لو الشعار شفاف */
-    }
-
-    /* تصغير على الموبايل زي قبل */
+    /* Mobile tweaks */
     @media (max-width:640px) {
+      .navlinks {
+        display: none
+      }
+
+      .hamburger {
+        display: inline-flex
+      }
+
       .brand .logo {
         width: 34px;
         height: 34px
@@ -374,9 +446,28 @@
       .brand .logo .logo-img {
         border-radius: 7px
       }
+
+      .actions {
+        gap: 6px
+      }
+
+      .actions .toggle button {
+        padding: 6px 8px;
+        font-size: 12px
+      }
+
+      .actions .btn {
+        padding: 8px 10px;
+        font-size: 14px;
+        border-radius: 10px
+      }
+
+      .container {
+        width: min(1200px, 95%)
+      }
     }
 
-    @media (max-width: 960px) {
+    @media (max-width:960px) {
 
       .hero-grid,
       .cols-2,
@@ -401,6 +492,10 @@
           <strong data-i18n="brand.name">مكتب إيمان المغربي</strong>
         </div>
       </div>
+
+      <!-- Hamburger (mobile) -->
+      <button id="menuBtn" class="hamburger" aria-label="Open menu">☰</button>
+
       <nav class="navlinks">
         <a href="index.html" data-i18n="nav.home">الرئيسية</a>
         <a href="audit.html" data-i18n="nav.audit">التدقيق</a>
@@ -422,6 +517,13 @@
       </div>
     </div>
   </header>
+
+  <!-- Overlay + Sidebar (mobile) -->
+  <div id="overlay" aria-hidden="true"></div>
+  <aside id="sidebar" aria-label="قائمة الصفحات">
+    <h3 data-i18n="side.title">تصفّح الصفحات</h3>
+    <nav id="sideList"></nav>
+  </aside>
 
   <!-- HERO -->
   <section class="hero">
@@ -559,10 +661,8 @@
           <input id="months" type="number" min="1" max="12" value="12"
             style="width:100%;padding:10px;border-radius:10px;border:1px solid var(--border);background:var(--bg);color:var(--text)" />
           <div style="margin-top:10px">
-            <label class="small">
-              <input id="includeAudit" type="checkbox" checked /> <span data-i18n="est.includeAudit">إضافة اعتماد
-                القوائم السنوية</span>
-            </label>
+            <label class="small"><input id="includeAudit" type="checkbox" checked /> <span
+                data-i18n="est.includeAudit">إضافة اعتماد القوائم السنوية</span></label>
           </div>
           <div style="margin-top:10px">
             <label class="small" for="vat" data-i18n="est.vat">نسبة ضريبة القيمة المضافة:</label>
@@ -635,52 +735,48 @@
       ar: {
         "brand.tag": "مكتب محاسبة ومراجعة", "brand.name": "مكتب إيمان المغربي",
         "nav.home": "الرئيسية", "nav.audit": "التدقيق", "nav.tax": "الضرائب", "nav.consult": "الاستشارات", "nav.company": "تأسيس الشركات", "nav.assurance": "المعايير", "nav.pricing": "الأتعاب", "nav.contact": "التواصل",
-
+        "side.title": "تصفّح الصفحات",
         "hero.kicker": "الأتعاب والتسعير", "hero.title": "تسعير شفاف قائم على الوقت والمصاريف الفعلية", "hero.lead": "نعتمد أسلوب وقت فريق العمل + المصاريف الفعلية مع هيكل مرجعي واضح، واستثناءات محددة، وإعادة تقييم سنوي، وشروط دفع مبسطة.",
         "hero.auditBadge": "اعتماد القوائم السنوية (مرجعي):", "hero.auditPrice": "75,000 جنيه", "hero.retain": "باقة الامتثال التشغيلي الشهرية", "hero.retainPrice": "50,000", "hero.egp": "جنيه / شهر",
         "hero.li1": "رفع إقرار القيمة المضافة الشهري.", "hero.li2": "تسويات كسب العمل والخصم والإضافة.", "hero.li3": "تشغيل ومتابعة الفاتورة الإلكترونية.", "hero.li4": "متابعة هاتفية يومية + زيارة أسبوعية.", "hero.li5": "مراجعات بنكية ورسائل استيرادية.", "hero.li6": "مراجعة قانونية لعقود العميل المرسلة.", "hero.note": "الأسعار لا تشمل ضريبة القيمة المضافة 10%.",
-
         "price.title": "باقات مرجعية", "price.sub": "الأرقام إرشادية وتعتمد على حجم وتعقيد العمل.", "price.egp": "جنيه",
         "price.audit.h": "اعتماد القوائم السنوية", "price.audit.num": "75,000", "price.audit.li1": "تقرير المراجع عن القوائم المالية مع الإيضاحات.", "price.audit.li2": "وفق المعايير المصرية للمراجعة.", "price.audit.li3": "مسؤولية إعداد القوائم تقع على الإدارة.", "price.vatNote": "غير شامل 10% ضريبة القيمة المضافة.",
         "price.retain.h": "امتثال تشغيلي شهري", "price.retain.num": "50,000", "price.retain.li1": "الدورة المستندية والرقابة اليومية.", "price.retain.li2": "VAT شهري، كسب العمل/خصم وإضافة.", "price.retain.li3": "الفاتورة الإلكترونية والمتابعة.", "price.retain.li4": "زيارة أسبوعية + متابعة هاتفية يومية.", "price.retain.li5": "مراجعات بنكية وعقود قانونية.", "price.retain.note": "يُسدد كل ثلاثة أشهر مقدمًا.",
         "price.addon.h": "نطاقات إضافية", "price.addon.li1": "خدمات محاسبية/ضريبية خارج نطاق المراجعة.", "price.addon.li2": "اتفاق تحريري منفصل قبل البدء.", "price.addon.li3": "تسعير بالوقت + المصاريف الفعلية.", "price.addon.note": "تقديم عرض تفصيلي حسب الطلب.",
-
         "terms.title": "الاستثناءات وشروط التسعير", "terms.sub": "بنود تؤثر على السعر النهائي وطريقة السداد.",
         "terms.exc.h": "غير شامل", "terms.exc.li1": "مصاريف السفر خارج نطاق القاهرة الكبرى.", "terms.exc.li2": "أي مصروفات قضائية.", "terms.exc.li3": "ضريبة القيمة المضافة 10%.", "terms.exc.note": "إعادة تقييم الأتعاب سنويًا.",
         "terms.pay.h": "شروط الدفع", "terms.pay.li1": "أتعاب المراجعة: 100% عند إصدار التقرير السنوي.", "terms.pay.li2": "الأتعاب الشهرية: تُدفع كل 3 أشهر مقدمًا.", "terms.pay.note": "فواتير مجمّعة دورية.",
         "terms.scope.h": "سياسة النطاق", "terms.scope.li1": "الخدمات الإضافية تُوثّق باتفاق منفصل.", "terms.scope.li2": "الرسوم تُحدَّد مسبقًا قبل البدء بالخدمة.", "terms.scope.note": "شفافية كاملة قبل التنفيذ.",
-
         "est.title": "حاسبة تقديرية", "est.sub": "حساب سريع للباقة الشهرية + اعتماد سنوي (اختياري).", "est.months": "عدد الشهور (امتثال شهري):", "est.includeAudit": "إضافة اعتماد القوائم السنوية", "est.vat": "نسبة ضريبة القيمة المضافة:", "est.calc": "احسب",
         "est.result.h": "النتيجة", "est.result.pre": "قبل الضريبة:", "est.result.vat": "ضريبة القيمة المضافة:", "est.result.total": "الإجمالي:", "est.note": "لا تشمل الحاسبة أي مصاريف سفر خارج القاهرة الكبرى أو مصروفات قضائية.",
-
         "cta.h": "جاهز نبدأ؟", "cta.p": "راسلنا لتسعير تفصيلي حسب نشاطك وحجم العمليات.", "cta.contact": "تواصل معنا", "cta.more": "استكشف الاستشارات",
-
-        "foot.name": "مكتب إيمان المغربي", "foot.copy": "© جميع الحقوق محفوظة.", "foot.note1": "التسعير يستند إلى الوقت والمصاريف الفعلية.", "foot.note2": "الأرقام المعروضة مرجعية وتتغير حسب النطاق.", "foot.link1": "Advisory", "foot.link2": "Company Formation", "foot.link3": "Contact"
+        "foot.name": "مكتب إيمان المغربي", "foot.copy": "© جميع الحقوق محفوظة.", "foot.note1": "التسعير يستند إلى الوقت والمصاريف الفعلية.", "foot.note2": "الأرقام المعروضة مرجعية وتتغير حسب النطاق.", "foot.link1": "Advisory", "foot.link2": "Company Formation", "foot.link3": "Contact",
+        /* Sidebar links labels (cards) */
+        "links.audit": "التدقيق والمراجعة", "links.tax": "الضرائب", "links.consult": "الاستشارات والنظم", "links.company": "تأسيس الشركات والتأمينات",
+        "links.assure": "المعايير والالتزام", "links.pricing": "الأتعاب", "links.contact": "نموذج التواصل", "links.about": "عن المكتب"
       },
       en: {
         "brand.tag": "Accounting & Audit Office", "brand.name": "Eman El-Maghraby Office",
         "nav.home": "Home", "nav.audit": "Audit", "nav.tax": "Tax", "nav.consult": "Advisory", "nav.company": "Company Formation", "nav.assurance": "Standards", "nav.pricing": "Pricing", "nav.contact": "Contact",
-
+        "side.title": "Browse pages",
         "hero.kicker": "Fees & Pricing", "hero.title": "Transparent pricing based on time & actual expenses", "hero.lead": "We price by team time + actual expenses with a clear reference structure, explicit exclusions, annual re-evaluation, and simple payment terms.",
         "hero.auditBadge": "Annual FS approval (reference):", "hero.auditPrice": "EGP 75,000", "hero.retain": "Monthly operational compliance package", "hero.retainPrice": "50,000", "hero.egp": "EGP / month",
         "hero.li1": "Monthly VAT return filing.", "hero.li2": "Payroll adjustments & WHT (deduction/addition).", "hero.li3": "E-invoice onboarding & monitoring.", "hero.li4": "Daily phone follow-up + weekly onsite visit.", "hero.li5": "Bank reconciliations & import letters.", "hero.li6": "Legal review of client contracts.", "hero.note": "Prices exclude 10% VAT.",
-
         "price.title": "Reference packages", "price.sub": "Figures are indicative and depend on scope & complexity.", "price.egp": "EGP",
         "price.audit.h": "Annual FS approval", "price.audit.num": "75,000", "price.audit.li1": "Auditor’s report on FS with notes.", "price.audit.li2": "Under Egyptian Auditing Standards.", "price.audit.li3": "FS preparation is management’s responsibility.", "price.vatNote": "10% VAT not included.",
         "price.retain.h": "Monthly compliance retainer", "price.retain.num": "50,000", "price.retain.li1": "Documentary cycle & daily oversight.", "price.retain.li2": "Monthly VAT, payroll/WHT.", "price.retain.li3": "E-invoice operations.", "price.retain.li4": "Weekly onsite + daily phone follow-up.", "price.retain.li5": "Bank reconciliations & contract review.", "price.retain.note": "Payable quarterly in advance.",
         "price.addon.h": "Additional scopes", "price.addon.li1": "Non-audit accounting/tax services.", "price.addon.li2": "Separate written agreement before start.", "price.addon.li3": "Time-based + actual expenses.", "price.addon.note": "Detailed quote on request.",
-
         "terms.title": "Exclusions & terms", "terms.sub": "Items affecting final price & payment schedule.",
         "terms.exc.h": "Excludes", "terms.exc.li1": "Travel outside Greater Cairo.", "terms.exc.li2": "Any judicial expenses.", "terms.exc.li3": "10% VAT.", "terms.exc.note": "Fees re-evaluated annually.",
         "terms.pay.h": "Payment", "terms.pay.li1": "Audit fees: 100% on release of annual report.", "terms.pay.li2": "Monthly fees: paid every 3 months in advance.", "terms.pay.note": "Batched periodic invoices.",
         "terms.scope.h": "Scope policy", "terms.scope.li1": "Out-of-scope services via separate agreement.", "terms.scope.li2": "Fees confirmed before commencement.", "terms.scope.note": "Full transparency prior to work.",
-
         "est.title": "Quick estimator", "est.sub": "Fast estimate for monthly retainer + optional annual approval.", "est.months": "Months (monthly retainer):", "est.includeAudit": "Include annual FS approval", "est.vat": "VAT percentage:", "est.calc": "Calculate",
         "est.result.h": "Result", "est.result.pre": "Pre-VAT:", "est.result.vat": "VAT:", "est.result.total": "Total:", "est.note": "Estimator excludes travel outside Greater Cairo and any judicial expenses.",
-
         "cta.h": "Ready to get started?", "cta.p": "Contact us for a detailed scope-based quote.", "cta.contact": "Contact us", "cta.more": "Explore Advisory",
-
-        "foot.name": "Eman El-Maghraby Office", "foot.copy": "© All rights reserved.", "foot.note1": "Pricing is time + actual expenses.", "foot.note2": "Values shown are reference only.", "foot.link1": "Advisory", "foot.link2": "Company Formation", "foot.link3": "Contact"
+        "foot.name": "Eman El-Maghraby Office", "foot.copy": "© All rights reserved.", "foot.note1": "Pricing is time + actual expenses.", "foot.note2": "Values shown are reference only.", "foot.link1": "Advisory", "foot.link2": "Company Formation", "foot.link3": "Contact",
+        /* Sidebar links labels (cards) */
+        "links.audit": "Audit & Assurance", "links.tax": "Tax", "links.consult": "Advisory & Systems", "links.company": "Formation & Social Insurance",
+        "links.assure": "Standards & Compliance", "links.pricing": "Pricing", "links.contact": "Contact form", "links.about": "About"
       }
     };
 
@@ -697,20 +793,22 @@
       $html.setAttribute('lang', lang); $html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
       localStorage.setItem('lang', lang);
       $langToggle.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+      // لو السايدبار مفتوح وقت تغيير اللغة نقفّله علشان يتظبط اتجاهه
+      closeSidebar();
+      // بعد ما نقفل، نعيد ملء عناوين الكروت حسب اللغة
+      relabelSidebar();
     }
     function applyTheme(theme) {
       document.body.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
       localStorage.setItem('theme', theme);
       $themeToggle.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.theme === theme));
     }
-    $langToggle.addEventListener('click', e => { if (e.target.matches('button[data-lang]')) applyI18n(e.target.dataset.lang); });
-    $themeToggle.addEventListener('click', e => { if (e.target.matches('button[data-theme]')) applyTheme(e.target.dataset.theme); });
+    $langToggle.addEventListener('click', e => { const btn = e.target.closest('button[data-lang]'); if (!btn) return; applyI18n(btn.dataset.lang); });
+    $themeToggle.addEventListener('click', e => { const btn = e.target.closest('button[data-theme]'); if (!btn) return; applyTheme(btn.dataset.theme); });
 
     // Reveal on scroll
     const io = new IntersectionObserver((entries) => {
-      entries.forEach(en => {
-        if (en.isIntersecting) { en.target.classList.add('in-view'); io.unobserve(en.target); }
-      });
+      entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in-view'); io.unobserve(en.target); } });
     }, { threshold: .2 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
@@ -722,19 +820,63 @@
       const months = Math.max(1, Math.min(12, +document.getElementById('months').value || 12));
       const includeAudit = document.getElementById('includeAudit').checked;
       const vatPct = Math.max(0, Math.min(20, +document.getElementById('vat').value || 10));
-
       const pre = (months * FEE_MONTHLY) + (includeAudit ? FEE_AUDIT : 0);
       const vat = Math.round(pre * (vatPct / 100));
       const total = pre + vat;
-
       document.getElementById('pre').textContent = fmt(pre);
       document.getElementById('vatVal').textContent = fmt(vat);
       document.getElementById('total').textContent = fmt(total);
     }
     document.getElementById('calcBtn').addEventListener('click', calc);
 
+    // Sidebar
+    const $menuBtn = document.getElementById('menuBtn');
+    const $overlay = document.getElementById('overlay');
+    const $sidebar = document.getElementById('sidebar');
+    const $sideList = document.getElementById('sideList');
+
+    const sideLinks = [
+      { href: "audit.html", key: "links.audit" },
+      { href: "tax.html", key: "links.tax" },
+      { href: "advisory.html", key: "links.consult" },
+      { href: "formation.html", key: "links.company" },
+      { href: "compliance.html", key: "links.assure" },
+      { href: "pricing.html", key: "links.pricing" },
+      { href: "contact.html", key: "links.contact" },
+      { href: "index.html#about", key: "links.about" }
+    ];
+    function buildSidebar() {
+      const lang = localStorage.getItem('lang') || 'ar';
+      const map = i18n[lang];
+      $sideList.innerHTML = sideLinks.map(l => {
+        const label = map[l.key] || l.href;
+        return `<a class="card" href="${l.href}" data-i18n="${l.key}">${label}</a>`;
+      }).join('');
+    }
+    function relabelSidebar() {
+      const lang = localStorage.getItem('lang') || 'ar';
+      const map = i18n[lang];
+      $sideList.querySelectorAll('[data-i18n]').forEach(a => {
+        const k = a.getAttribute('data-i18n'); if (map[k]) a.textContent = map[k];
+      });
+    }
+    function openSidebar() {
+      $sidebar.classList.add('open');
+      $overlay.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeSidebar() {
+      $sidebar.classList.remove('open');
+      $overlay.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+    $menuBtn.addEventListener('click', openSidebar);
+    $overlay.addEventListener('click', closeSidebar);
+    $sideList.addEventListener('click', e => { if (e.target.closest('a')) closeSidebar(); });
+
     // Init
     (function () {
+      buildSidebar();
       applyI18n(localStorage.getItem('lang') || 'ar');
       applyTheme(localStorage.getItem('theme') || 'light');
       document.querySelectorAll('.reveal').forEach(el => io.observe(el));

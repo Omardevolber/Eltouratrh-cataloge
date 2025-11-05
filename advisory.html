@@ -5,7 +5,6 @@
   <link rel="icon" type="image/png" href="images/logo.png" />
   <script>
     (function () {
-      // لو أنت حالياً على /home.html، اظهرها /home من غير إعادة تحميل
       if (/\.html$/.test(location.pathname)) {
         history.replaceState(null, '', location.pathname.replace(/\.html$/, '') + location.search + location.hash);
       }
@@ -99,7 +98,18 @@
       height: 40px;
       border-radius: 10px;
       box-shadow: 0 6px 18px color-mix(in oklab, var(--brand) 35%, transparent);
-      background: conic-gradient(from 210deg, var(--brand), var(--brand2), var(--accent), var(--brand))
+      background: conic-gradient(from 210deg, var(--brand), var(--brand2), var(--accent), var(--brand));
+      padding: 2px;
+      display: inline-grid;
+      place-items: center;
+    }
+
+    .logo-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      object-fit: contain;
+      background: #fff
     }
 
     .navlinks {
@@ -170,6 +180,81 @@
 
     .btn.ghost {
       background: transparent
+    }
+
+    /* Hamburger + Sidebar */
+    .hamburger {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      cursor: pointer
+    }
+
+    #overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .45);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s;
+      z-index: 70
+    }
+
+    #overlay.show {
+      opacity: 1;
+      pointer-events: auto
+    }
+
+    #sidebar {
+      position: fixed;
+      top: 0;
+      height: 100dvh;
+      width: min(85vw, 360px);
+      background: var(--card);
+      border-inline-start: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      transform: translateX(100%);
+      transition: transform .25s;
+      z-index: 80;
+      padding: 14px;
+      overflow: auto
+    }
+
+    html[dir="ltr"] #sidebar {
+      transform: translateX(-100%);
+      left: 0;
+      border-inline-start: 0;
+      border-inline-end: 1px solid var(--border)
+    }
+
+    html[dir="rtl"] #sidebar {
+      right: 0
+    }
+
+    #sidebar.open {
+      transform: translateX(0)
+    }
+
+    #sidebar h3 {
+      margin: 6px 4px 12px;
+      font-size: 16px;
+      color: var(--sub)
+    }
+
+    #sideList {
+      display: grid;
+      gap: 12px
+    }
+
+    #sideList .card {
+      padding: 12px;
+      border-radius: 12px
     }
 
     /* Hero */
@@ -390,31 +475,16 @@
       grid-template-columns: 1.2fr 1fr 1fr
     }
 
-    /* إطار اللوجو + نفس الglow */
-    .logo {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      background: conic-gradient(from 210deg, var(--brand), var(--brand2), var(--accent), var(--brand));
-      box-shadow: 0 6px 18px color-mix(in oklab, var(--brand) 35%, transparent);
-      padding: 2px;
-      /* حافة رفيعة حول الصورة */
-      display: inline-grid;
-      place-items: center;
-    }
-
-    .logo-img {
-      width: 100%;
-      height: 100%;
-      border-radius: 8px;
-      object-fit: contain;
-      /* يراعي نسبة الصورة */
-      background: #fff;
-      /* خلفية بيضا لو الشعار شفاف */
-    }
-
-    /* تصغير على الموبايل زي قبل */
+    /* Mobile tweaks */
     @media (max-width:640px) {
+      .navlinks {
+        display: none
+      }
+
+      .hamburger {
+        display: inline-flex
+      }
+
       .brand .logo {
         width: 34px;
         height: 34px
@@ -422,6 +492,25 @@
 
       .brand .logo .logo-img {
         border-radius: 7px
+      }
+
+      .actions {
+        gap: 6px
+      }
+
+      .actions .toggle button {
+        padding: 6px 8px;
+        font-size: 12px
+      }
+
+      .actions .btn {
+        padding: 8px 10px;
+        font-size: 14px;
+        border-radius: 10px
+      }
+
+      .container {
+        width: min(1200px, 95%)
       }
     }
 
@@ -452,6 +541,10 @@
           <strong data-i18n="brand.name">مكتب إيمان المغربي</strong>
         </div>
       </div>
+
+      <!-- Hamburger (mobile) -->
+      <button id="menuBtn" class="hamburger" aria-label="Open menu">☰</button>
+
       <nav class="navlinks">
         <a href="index.html" data-i18n="nav.home">الرئيسية</a>
         <a href="audit.html" data-i18n="nav.audit">التدقيق</a>
@@ -473,6 +566,13 @@
       </div>
     </div>
   </header>
+
+  <!-- Overlay + Sidebar (mobile) -->
+  <div id="overlay" aria-hidden="true"></div>
+  <aside id="sidebar" aria-label="قائمة الصفحات">
+    <h3 data-i18n="side.title">تصفّح الصفحات</h3>
+    <nav id="sideList"></nav>
+  </aside>
 
   <!-- HERO -->
   <section class="hero">
@@ -867,6 +967,10 @@
         "brand.tag": "مكتب محاسبة ومراجعة", "brand.name": "مكتب إيمان المغربي",
         "nav.home": "الرئيسية", "nav.audit": "التدقيق", "nav.tax": "الضرائب", "nav.consult": "الاستشارات والنظم", "nav.company": "تأسيس الشركات", "nav.assurance": "المعايير", "nav.pricing": "الأتعاب", "nav.contact": "التواصل",
 
+        "side.title": "تصفّح الصفحات",
+        "links.audit": "التدقيق والمراجعة", "links.tax": "الضرائب", "links.consult": "الاستشارات والنظم", "links.company": "تأسيس الشركات والتأمينات",
+        "links.assure": "المعايير والالتزام", "links.pricing": "الأتعاب", "links.contact": "نموذج التواصل", "links.about": "عن المكتب",
+
         "hero.kicker": "استشارات مالية وإدارية وقانونية", "hero.title": "نظم محاسبية قوية + رقابة داخلية + تقارير تنفيذية",
         "hero.lead": "فريق الاستشارات والنظم يقدّم تصميمًا وتنفيذًا متكاملًا: نظم محاسبة، دورات مستندية، لوائح مالية وإدارية وداخلية، نظم رقابة داخلية، وتقارير على جميع المستويات—مع مراجعة قانونية ومالية للعقود قبل التوقيع.",
         "hero.t1": "نظم محاسبية", "hero.t2": "رقابة داخلية", "hero.t3": "تقارير إدارية", "hero.t4": "مراجعة قانونية/مالية",
@@ -932,6 +1036,10 @@
       en: {
         "brand.tag": "Accounting & Audit Office", "brand.name": "Eman El-Maghraby Office",
         "nav.home": "Home", "nav.audit": "Audit", "nav.tax": "Tax", "nav.consult": "Advisory & Systems", "nav.company": "Company Formation", "nav.assurance": "Standards", "nav.pricing": "Pricing", "nav.contact": "Contact",
+
+        "side.title": "Browse pages",
+        "links.audit": "Audit & Assurance", "links.tax": "Tax", "links.consult": "Advisory & Systems", "links.company": "Formation & Social Insurance",
+        "links.assure": "Standards & Compliance", "links.pricing": "Pricing", "links.contact": "Contact form", "links.about": "About",
 
         "hero.kicker": "Financial, Administrative & Legal Advisory", "hero.title": "Robust accounting systems + internal control + executive reporting",
         "hero.lead": "The Advisory & Systems team designs and implements end-to-end solutions: accounting systems, document flows, financial/administrative/internal bylaws, internal controls, and reports for all management levels—with legal & financial contract review before signing.",
@@ -1010,14 +1118,16 @@
       $html.setAttribute('lang', lang); $html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
       localStorage.setItem('lang', lang);
       $langToggle.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+      closeSidebar();
+      relabelSidebar();
     }
     function applyTheme(theme) {
       document.body.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
       localStorage.setItem('theme', theme);
       $themeToggle.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.theme === theme));
     }
-    $langToggle.addEventListener('click', e => { if (e.target.matches('button[data-lang]')) applyI18n(e.target.dataset.lang); });
-    $themeToggle.addEventListener('click', e => { if (e.target.matches('button[data-theme]')) applyTheme(e.target.dataset.theme); });
+    $langToggle.addEventListener('click', e => { const btn = e.target.closest('button[data-lang]'); if (!btn) return; applyI18n(btn.dataset.lang); });
+    $themeToggle.addEventListener('click', e => { const btn = e.target.closest('button[data-theme]'); if (!btn) return; applyTheme(btn.dataset.theme); });
 
     // Reveal on scroll
     const io = new IntersectionObserver((entries) => {
@@ -1040,8 +1150,54 @@
     }, { threshold: .4 });
     sections.forEach(s => s && obs.observe(s));
 
+    // Sidebar
+    const $menuBtn = document.getElementById('menuBtn');
+    const $overlay = document.getElementById('overlay');
+    const $sidebar = document.getElementById('sidebar');
+    const $sideList = document.getElementById('sideList');
+
+    const sideLinks = [
+      { href: "audit.html", key: "links.audit" },
+      { href: "tax.html", key: "links.tax" },
+      { href: "advisory.html", key: "links.consult" },
+      { href: "formation.html", key: "links.company" },
+      { href: "compliance.html", key: "links.assure" },
+      { href: "pricing.html", key: "links.pricing" },
+      { href: "contact.html", key: "links.contact" },
+      { href: "index.html#about", key: "links.about" }
+    ];
+    function buildSidebar() {
+      const lang = localStorage.getItem('lang') || 'ar';
+      const map = i18n[lang];
+      $sideList.innerHTML = sideLinks.map(l => {
+        const label = map[l.key] || l.href;
+        return `<a class="card" href="${l.href}" data-i18n="${l.key}">${label}</a>`;
+      }).join('');
+    }
+    function relabelSidebar() {
+      const lang = localStorage.getItem('lang') || 'ar';
+      const map = i18n[lang];
+      $sideList.querySelectorAll('[data-i18n]').forEach(a => {
+        const k = a.getAttribute('data-i18n'); if (map[k]) a.textContent = map[k];
+      });
+    }
+    function openSidebar() {
+      $sidebar.classList.add('open');
+      $overlay.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeSidebar() {
+      $sidebar.classList.remove('open');
+      $overlay.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+    $menuBtn.addEventListener('click', openSidebar);
+    $overlay.addEventListener('click', closeSidebar);
+    $sideList.addEventListener('click', e => { if (e.target.closest('a')) closeSidebar(); });
+
     // Init
     (function () {
+      buildSidebar();
       applyI18n(localStorage.getItem('lang') || 'ar');
       applyTheme(localStorage.getItem('theme') || 'light');
       document.querySelectorAll('.reveal').forEach(el => io.observe(el));
