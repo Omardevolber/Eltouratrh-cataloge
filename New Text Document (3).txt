@@ -1,0 +1,43 @@
+void QueueClass::addQueue(int value)
+{
+    if (isEmptyFull())
+        return;
+
+    QueueRear = (QueueRear + 1) % maxQueueSize;
+    List[QueueRear] = value;
+    Count++;
+}
+
+void QueueClass::deleteQueue(int &value)
+{
+    if (isEmptyQueue())
+        return;
+
+    value = List[QueueFront];
+    QueueFront = (QueueFront + 1) % maxQueueSize;
+    Count--;
+}
+---------------------------------------------------------------------------------
+int main()
+{
+    QueueClass q(5);
+    int x;
+
+    for (int k = 10; k <= 40; k += 10)
+        q.addQueue(k);
+
+    for (int k = 1; k <= 3; k++)
+        q.deleteQueue(x);
+
+    for (int k = 50; k <= 80; k += 10)
+        q.addQueue(k);
+
+    return 0;
+}
+----------------------------------------------------------------------------------------
+40   50   60   70   80
+
+
+
+
+The time complexity of the program is O(m^2)
